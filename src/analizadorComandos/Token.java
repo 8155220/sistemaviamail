@@ -51,6 +51,19 @@ public class Token {
     public static final int REGISTRARENCUESTA = 217;
     public static final int ELIMINARENCUESTA = 218;
     public static final int MODIFICARENCUESTA = 219;
+    //FACULTAD
+    public static final int OBTENERFACULTAD = 220;
+    public static final int REGISTRARFACULTAD = 221;
+    public static final int ELIMINARFACULTAD = 222;
+    public static final int MODIFICARFACULTAD = 223;
+    //DETALLEUSUARIOENCUESTA
+    public static final int OBTENERDETALLEUSUARIOENCUESTA = 224;
+    public static final int REGISTRARDETALLEUSUARIOENCUESTA = 225;
+    public static final int ELIMINARDETALLEUSUARIOENCUESTA = 226;
+    
+    //AYUDAS
+    public static final int OBTENERAYUDAMETRICAS = 300;
+
 
 
     private int nombre;

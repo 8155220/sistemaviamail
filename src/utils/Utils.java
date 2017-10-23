@@ -103,8 +103,8 @@ public class Utils {
         }
 
         // Creando Tabla para mostrar
-        Board board = new Board(125);
-        Table table = new Table(board, 125, headers, rowList);
+        Board board = new Board(300);
+        Table table = new Table(board, 300, headers, rowList);
         Block tableBlock = table.tableToBlocks();
         board.setInitialBlock(tableBlock);
         board.build();

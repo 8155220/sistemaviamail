@@ -88,6 +88,7 @@ public class Usuario {
     }
         
     //CRUD
+    
     public DefaultTableModel obtenerUsuarios() {
         // Tabla para mostrar lo obtenido de la consulta
         DefaultTableModel usuarios = new DefaultTableModel();

@@ -6,7 +6,6 @@
 package Modelo;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,17 +17,17 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Shep
  */
-public class Encuesta {
-
+public class DetalleUsuarioEncuesta {
     private int id;
-    private int idfacultad;
+    private int idencuesta;
     private int idnivelmodelo;
-    private Date fecha;
-    private int cuantificacionmadurez;
-    private String nivelmadurezaprobado;
+    private int idnivelindicador;
+    private int idusuario;
+    private int respuesta;
     
     public Conexion m_Conexion;
-    public Encuesta() {
+
+    public DetalleUsuarioEncuesta() {
         this.m_Conexion = Conexion.getInstancia();
     }
 
@@ -40,12 +39,12 @@ public class Encuesta {
         this.id = id;
     }
 
-    public int getIdfacultad() {
-        return idfacultad;
+    public int getIdencuesta() {
+        return idencuesta;
     }
 
-    public void setIdfacultad(int idfacultad) {
-        this.idfacultad = idfacultad;
+    public void setIdencuesta(int idencuesta) {
+        this.idencuesta = idencuesta;
     }
 
     public int getIdnivelmodelo() {
@@ -56,91 +55,49 @@ public class Encuesta {
         this.idnivelmodelo = idnivelmodelo;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public int getIdnivelindicador() {
+        return idnivelindicador;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setIdnivelindicador(int idnivelindicador) {
+        this.idnivelindicador = idnivelindicador;
     }
 
-    public int getCuantificacionmadurez() {
-        return cuantificacionmadurez;
+    public int getIdusuario() {
+        return idusuario;
     }
 
-    public void setCuantificacionmadurez(int cuantificacionmadurez) {
-        this.cuantificacionmadurez = cuantificacionmadurez;
+    public void setIdusuario(int idusuario) {
+        this.idusuario = idusuario;
     }
 
-    public String getNivelmadurezaprobado() {
-        return nivelmadurezaprobado;
+    public int getRespuesta() {
+        return respuesta;
     }
 
-    public void setNivelmadurezaprobado(String nivelmadurezaprobado) {
-        this.nivelmadurezaprobado = nivelmadurezaprobado;
+    public void setRespuesta(int respuesta) {
+        this.respuesta = respuesta;
     }
-    /*
-    public DefaultTableModel obtenerEncuestas() {
-        // Tabla para mostrar lo obtenido de la consulta
-        DefaultTableModel encuestas = new DefaultTableModel();
-        encuestas.setColumnIdentifiers(new Object[]{ //nombre, ci, cargo, fechanacimiento, sexo, direccion
-            "id", "idfacultad", "idnivelmodelo", "fecha", "cuantificacionmadurez", "nivelmadurezaprobado"
-        });
-        
-        // Abro y obtengo la conexion
-        this.m_Conexion.abrirConexion();
-        Connection con = this.m_Conexion.getConexion();
-
-        // Preparo la consulta
-        String sql = "SELECT\n"
-                + "encuesta.id,\n"
-                + "encuesta.idfacultad,\n"
-                + "encuesta.idnivelmodelo,\n"
-                + "encuesta.fecha,\n"
-                + "encuesta.cuantificacionmadurez,\n"
-                + "encuesta.nivelmadurezaprobado\n"
-                + "FROM encuesta";
-
-        try {
-            // La ejecuto
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            // Cierro la conexion
-            this.m_Conexion.cerrarConexion();
-
-            // Recorro el resultado
-            while (rs.next()) {
-                // Agrego las tuplas a mi tabla
-                encuestas.addRow(new Object[]{
-                    rs.getInt("id"),
-                    rs.getInt("idfacultad"),
-                    rs.getInt("idnivelmodelo"),
-                    rs.getDate("fecha"),
-                    rs.getInt("cuantificacionmadurez"),
-                    rs.getString("nivelmadurezaprobado")
-                });
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return encuestas;
-    }*/
     
- public DefaultTableModel obtenerEncuestas() {
+    public DefaultTableModel obtenerDetalleUsuarioEncuestas() {
         // Tabla para mostrar lo obtenido de la consulta
-        DefaultTableModel encuestas = new DefaultTableModel();
-        encuestas.setColumnIdentifiers(new Object[]{ //nombre, ci, cargo, fechanacimiento, sexo, direccion
-            "id", "facultad", "modelo", "fecha", "cuantificacionmadurez", "nivelmadurezaprobado"
+        DefaultTableModel detalleusuarioencuestas = new DefaultTableModel();
+        detalleusuarioencuestas.setColumnIdentifiers(new Object[]{ //nombre, ci, cargo, fechanacimiento, sexo, direccion
+            "id", "idencuesta", "nivelmodelo", "nivelindicador", "usuario", "respuesta"
         });
             this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
         // Preparo la consulta
-        String sql = "SELECT e.id,f.descripcion descripcionfacultad,nm.descripcion descripcionnivelmodelo,e.fecha,e.cuantificacionmadurez,e.nivelmadurezaprobado from encuesta e,facultad f,nivelmodelo nm where e.idfacultad=f.id and e.idnivelmodelo=nm.id";
+        String sql = "select due.id,e.id idencuesta\n" +
+                    ",nm.descripcion descripcionnivelmodelo\n" +
+                    ",ni.descripcion descripcionnivelindicador\n" +
+                    ",u.nombre nombreusuario\n" +
+                    ",due.respuesta\n" +
+                    "from detalle_usuario_encuesta due, encuesta e, nivelmodelo nm, nivelindicador ni, usuario u \n" +
+                    "where due.idencuesta=e.id and due.idnivelmodelo=nm.id and due.idnivelindicador=ni.id and due.idusuario=u.id";
 
         try {
             // La ejecuto
-            System.out.println("ERROR AQUI : "+ sql);
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -150,21 +107,21 @@ public class Encuesta {
             // Recorro el resultado
             while (rs.next()) {
                 // Agrego las tuplas a mi tabla
-                encuestas.addRow(new Object[]{
+                detalleusuarioencuestas.addRow(new Object[]{
                     rs.getInt("id"),
-                    rs.getString("descripcionfacultad"),
+                    rs.getInt("idencuesta"),
                     rs.getString("descripcionnivelmodelo"),
-                    rs.getDate("fecha"),
-                    rs.getInt("cuantificacionmadurez"),
-                    rs.getString("nivelmadurezaprobado")
+                    rs.getString("descripcionnivelindicador"),
+                    rs.getString("nombreusuario"),
+                    rs.getInt("respuesta")
                 });
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return encuestas;
+        return detalleusuarioencuestas;
     }
-    public int registrarEncuesta() {
+    public int registrarDetalleUsuarioEncuesta() {
         // Abro y obtengo la conexion
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
@@ -172,9 +129,9 @@ public class Encuesta {
         // Preparo la consulta
         
     
-        String sql = "INSERT INTO public.encuesta(\n"
-                + "	idfacultad, idnivelmodelo, fecha)\n"
-                + "	VALUES (?, ?, ?);"; 
+        String sql = "INSERT INTO public.detalle_usuario_encuesta(\n" +
+                    "	idencuesta, idnivelmodelo, idnivelindicador, idusuario, respuesta)\n" +
+                    "	VALUES (?, ?, ?, ?, ?);"; 
 
         try {
             // La ejecuto
@@ -183,10 +140,11 @@ public class Encuesta {
             // es bueno cuando nuestra bd tiene las primarias autoincrementables
             
             //registrando la fecha actual en this.fecha 
-            this.fecha = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-            ps.setInt(1, this.idfacultad);
+            ps.setInt(1, this.idencuesta);
             ps.setInt(2, this.idnivelmodelo);
-            ps.setDate(3, this.fecha);
+            ps.setInt(3, this.idnivelindicador);
+            ps.setInt(4, this.idusuario);
+            ps.setInt(5,this.respuesta);
             int rows = ps.executeUpdate();
 
             // Cierro Conexion
@@ -206,21 +164,21 @@ public class Encuesta {
     }
 
     /* NO TENDRA MODIFICAR 
-    public void modificarEncuesta() {
+    public void modificarDetalleUsuarioEncuesta() {
         // Abro y obtengo la conexion
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "UPDATE encuesta SET\n"
+        String sql = "UPDATE detalleusuarioencuesta SET\n"
                 + "cantidadmiembros = ?,\n"
                 + "cuantificacionmadurez = ?,\n"
                 + "descripcion = ?,\n"
                 + "evaluacion = ?,\n"
                 + "idnivelindicador = ?,\n"
-                + "idtipoencuesta = ?,\n"
+                + "idtipodetalleusuarioencuesta = ?,\n"
                 + "fecha = ?\n"
-                + "WHERE encuesta.id = ?";
+                + "WHERE detalleusuarioencuesta.id = ?";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);
@@ -229,7 +187,7 @@ public class Encuesta {
             ps.setString(3, this.descripcion);
             ps.setInt(4, this.evaluacion);
             ps.setInt(5, this.idnivelindicador);
-            ps.setInt(6, this.idtipoencuesta);
+            ps.setInt(6, this.idtipodetalleusuarioencuesta);
             ps.setDate(7, this.fecha);
             ps.setInt(8, this.id);
             int rows = ps.executeUpdate();
@@ -241,10 +199,10 @@ public class Encuesta {
         }
     } */
 
-    public DefaultTableModel getEncuesta(int id) {
+    public DefaultTableModel getDetalleUsuarioEncuesta(int id) {
         // Tabla para mostrar lo obtenido de la consulta
-        DefaultTableModel encuesta = new DefaultTableModel();
-        encuesta.setColumnIdentifiers(new Object[]{
+        DefaultTableModel detalleusuarioencuesta = new DefaultTableModel();
+        detalleusuarioencuesta.setColumnIdentifiers(new Object[]{
             "id", "nombre", "ci", "cargo", "fechanacimiento", "sexo", "direccion"
         });
 
@@ -254,15 +212,15 @@ public class Encuesta {
 
         // Preparo la consulta
         String sql = "SELECT\n"
-                + "encuesta.id,\n"
-                + "encuesta.nombre,\n"
-                + "encuesta.ci,\n"
-                + "encuesta.cargo,\n"
-                + "encuesta.fechanacimiento,\n"
-                + "encuesta.sexo,\n"
-                + "encuesta.direccion\n"
-                + "FROM encuesta\n"
-                + "WHERE encuesta.id=?";
+                + "detalleusuarioencuesta.id,\n"
+                + "detalleusuarioencuesta.nombre,\n"
+                + "detalleusuarioencuesta.ci,\n"
+                + "detalleusuarioencuesta.cargo,\n"
+                + "detalleusuarioencuesta.fechanacimiento,\n"
+                + "detalleusuarioencuesta.sexo,\n"
+                + "detalleusuarioencuesta.direccion\n"
+                + "FROM detalleusuarioencuesta\n"
+                + "WHERE detalleusuarioencuesta.id=?";
         // Los simbolos de interrogacion son para mandar parametros 
         // a la consulta al momento de ejecutalas
 
@@ -277,7 +235,7 @@ public class Encuesta {
             // Recorro el resultado
             while (rs.next()) {
                 // Agrego las tuplas a mi tabla
-                encuesta.addRow(new Object[]{
+                detalleusuarioencuesta.addRow(new Object[]{
                     rs.getInt("id"),
                     rs.getString("nombre"),
                     rs.getString("ci"),
@@ -290,16 +248,16 @@ public class Encuesta {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return encuesta;
+        return detalleusuarioencuesta;
     }
 
-    public void eliminarEncuesta(int id) {
+    public void eliminarDetalleUsuarioEncuesta(int id) {
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "DELETE FROM encuesta\n"
-                + "WHERE encuesta.id = ?\n";
+        String sql = "DELETE FROM detalleusuarioencuesta\n"
+                + "WHERE detalleusuarioencuesta.id = ?\n";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);
@@ -315,5 +273,4 @@ public class Encuesta {
             System.out.println(ex.getMessage());
         }
     }
-
 }

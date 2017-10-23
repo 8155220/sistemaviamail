@@ -5,7 +5,6 @@
  */
 package Modelo;
 
-import Modelo.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,13 +16,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Shep
  */
-public class NivelIndicador {
+public class Facultad {
     private int id;
     private String descripcion;
-    private String metrica;
-    private int idnivelmodelo;
     public Conexion m_Conexion;
-    public NivelIndicador() {
+    public Facultad() {
         this.m_Conexion = Conexion.getInstancia();
     }
 
@@ -42,29 +39,12 @@ public class NivelIndicador {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
-    public String getMetrica() {
-        return metrica;
-    }
-
-    public void setMetrica(String metrica) {
-        this.metrica = metrica;
-    }
-
-    public int getIdnivelmodelo() {
-        return idnivelmodelo;
-    }
-
-    public void setIdnivelmodelo(int idnivelmodelo) {
-        this.idnivelmodelo = idnivelmodelo;
-    }
     
-    
-    public DefaultTableModel obtenerNivelIndicador() {
+    public DefaultTableModel obtenerFacultad() {
         // Tabla para mostrar lo obtenido de la consulta
-        DefaultTableModel nivelindicador = new DefaultTableModel();
-        nivelindicador.setColumnIdentifiers(new Object[]{  //nombre, ci, cargo, fechanacimiento, sexo, direccion
-            "id", "descripcion","metrica","idnivelmodelo"
+        DefaultTableModel facultad = new DefaultTableModel();
+        facultad.setColumnIdentifiers(new Object[]{  //nombre, ci, cargo, fechanacimiento, sexo, direccion
+            "id", "descripcion"
         });
 
         // Abro y obtengo la conexion
@@ -73,11 +53,9 @@ public class NivelIndicador {
 
         // Preparo la consulta
         String sql = "SELECT\n"
-                + "nivelindicador.id,\n"
-                + "nivelindicador.descripcion,\n"
-                + "nivelindicador.metrica,\n"
-                + "nivelindicador.idnivelmodelo\n"
-                + "FROM nivelindicador";
+                + "facultad.id,\n"
+                + "facultad.descripcion\n"
+                + "FROM facultad";
 
         try {
             // La ejecuto
@@ -90,32 +68,26 @@ public class NivelIndicador {
             // Recorro el resultado
             while (rs.next()) {
                 // Agrego las tuplas a mi tabla
-                nivelindicador.addRow(new Object[]{
+                facultad.addRow(new Object[]{
                     rs.getInt("id"),
-                    rs.getString("descripcion"),
-                    rs.getString("metrica"),
-                    rs.getInt("idnivelmodelo")
+                    rs.getString("descripcion")
                 });
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return nivelindicador;
+        return facultad;
     }
     
-    public int registrarNivelIndicador() {
+    public int registrarFacultad() {
         // Abro y obtengo la conexion
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
-            
-  
-    
+
         // Preparo la consulta
-        String sql = "INSERT INTO public.nivelindicador(\n" +
-                    "	descripcion,\n" +
-                    "	metrica,\n" +
-                    "	idnivelmodelo)\n" +
-                    "	VALUES (?,?,?);";
+        String sql = "INSERT INTO public.facultad(\n" +
+                    "	descripcion)\n" +
+                    "	VALUES (?);";
 
         try {
             // La ejecuto
@@ -123,8 +95,6 @@ public class NivelIndicador {
             // El segundo parametro de usa cuando se tienen tablas que generan llaves primarias
             // es bueno cuando nuestra bd tiene las primarias autoincrementables
             ps.setString(1, this.descripcion);
-            ps.setString(2, this.metrica);
-            ps.setInt(3, this.idnivelmodelo);
             int rows = ps.executeUpdate();
 
             // Cierro Conexion
@@ -142,24 +112,20 @@ public class NivelIndicador {
         }
         return 0;
     }
-    public void modificarNivelIndicador() {
+    public void modificarFacultad() {
         // Abro y obtengo la conexion
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "UPDATE nivelindicador SET\n"
-                + "descripcion = ? ,\n"
-                + "metrica = ?, \n"
-                + "idnivelmodelo = ?\n"
-                + "WHERE nivelindicador.id = ?";
+        String sql = "UPDATE facultad SET\n"
+                + "descripcion = ?\n"
+                + "WHERE facultad.id = ?";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);
-             ps.setString(1, this.descripcion);
-            ps.setString(2, this.metrica);
-            ps.setInt(3, this.idnivelmodelo);
-            ps.setInt(4, this.id);
+            ps.setString(1, this.descripcion);
+            ps.setInt(2, this.id);
             int rows = ps.executeUpdate();
             // Cierro la conexion
             this.m_Conexion.cerrarConexion();
@@ -168,10 +134,10 @@ public class NivelIndicador {
         }
     }
     
-    public DefaultTableModel getNivelIndicador(int id) {
+    public DefaultTableModel getFacultad(int id) {
         // Tabla para mostrar lo obtenido de la consulta
-        DefaultTableModel nivelindicador = new DefaultTableModel();
-        nivelindicador.setColumnIdentifiers(new Object[]{
+        DefaultTableModel facultad = new DefaultTableModel();
+        facultad.setColumnIdentifiers(new Object[]{
             "id", "descripcion"
         });
 
@@ -181,10 +147,10 @@ public class NivelIndicador {
 
         // Preparo la consulta
         String sql = "SELECT\n"
-                + "nivelindicador.id,\n"
-                + "nivelindicador.descripcion,\n"
-                + "FROM nivelindicador\n"
-                + "WHERE nivelindicador.id=?";
+                + "facultad.id,\n"
+                + "facultad.descripcion,\n"
+                + "FROM facultad\n"
+                + "WHERE facultad.id=?";
         // Los simbolos de interrogacion son para mandar parametros 
         // a la consulta al momento de ejecutalas
 
@@ -200,7 +166,7 @@ public class NivelIndicador {
             // Recorro el resultado
             while (rs.next()) {
                 // Agrego las tuplas a mi tabla
-                nivelindicador.addRow(new Object[]{
+                facultad.addRow(new Object[]{
                     rs.getInt("id"),
                     rs.getString("descripcion")
                 });
@@ -208,15 +174,15 @@ public class NivelIndicador {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return nivelindicador;
+        return facultad;
     }
-    public void eliminarNivelIndicador(int id){
+    public void eliminarFacultad(int id){
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "DELETE FROM nivelindicador\n"
-                + "WHERE nivelindicador.id = ?\n";
+        String sql = "DELETE FROM facultad\n"
+                + "WHERE facultad.id = ?\n";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);
@@ -232,6 +198,4 @@ public class NivelIndicador {
             System.out.println(ex.getMessage());
         }
     }
-    
-   
 }

@@ -31,29 +31,13 @@ public class EncuestaNegocio {
     public DefaultTableModel obtenerEncuesta(int id) {
         return this.encuesta.getEncuesta(id);
     }
-    public int registrarEncuesta(int cantidadmiembros, int cuantificacionmadurez, String descripcion, int evaluacion, int idnivelindicador, int idtipoencuesta,Date fecha) {
+    public int registrarEncuesta(int idfacultad, int idnivelmodelo) {
         // No olvidar primero settear los datos
-        this.encuesta.setCantidadmiembros(cantidadmiembros);
-        this.encuesta.setCuantificacionmadurez(cuantificacionmadurez);
-        this.encuesta.setDescripcion(descripcion);
-        this.encuesta.setEvaluacion(idnivelindicador);
-        this.encuesta.setIdnivelindicador(idnivelindicador);
-        this.encuesta.setIdtipoencuesta(idtipoencuesta);
-        this.encuesta.setFecha(fecha);
+        this.encuesta.setIdfacultad(idfacultad);
+        this.encuesta.setIdnivelmodelo(idnivelmodelo);
         return this.encuesta.registrarEncuesta();
     }
     public void eliminarEncuesta(int id){
         this.encuesta.eliminarEncuesta(id);
-    }
-    public void modificarEncuesta(int id,int cantidadmiembros, int cuantificacionmadurez, String descripcion, int evaluacion, int idnivelindicador, int idtipoencuesta,Date fecha) {
-        this.encuesta.setId(id);
-        this.encuesta.setCantidadmiembros(cantidadmiembros);
-        this.encuesta.setCuantificacionmadurez(cuantificacionmadurez);
-        this.encuesta.setDescripcion(descripcion);
-        this.encuesta.setEvaluacion(idnivelindicador);
-        this.encuesta.setIdnivelindicador(idnivelindicador);
-        this.encuesta.setIdtipoencuesta(idtipoencuesta);
-        this.encuesta.setFecha(fecha);
-        this.encuesta.modificarEncuesta();
     }
 }

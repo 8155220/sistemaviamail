@@ -26,17 +26,21 @@ public class NivelIndicadorNegocio {
     public DefaultTableModel obtenerUsuario(int id) {
         return this.nivelIndicador.getNivelIndicador(id);
     }
-    public int registrarNivelIndicador(String descripcion) {
+    public int registrarNivelIndicador(String descripcion,String metrica,int idnivelmodelo) {
         // No olvidar primero settear los datos
         this.nivelIndicador.setDescripcion(descripcion);
+        this.nivelIndicador.setMetrica(metrica);
+        this.nivelIndicador.setIdnivelmodelo(idnivelmodelo);
         return this.nivelIndicador.registrarNivelIndicador();
     }
     public void eliminarNivelIndicador(int id){
         this.nivelIndicador.eliminarNivelIndicador(id);
     }
-    public void modificarNivelIndicador(int id,String descripcion) {
+    public void modificarNivelIndicador(int id,String descripcion,String metrica,int idnivelmodelo){
         this.nivelIndicador.setId(id);
         this.nivelIndicador.setDescripcion(descripcion);
+        this.nivelIndicador.setMetrica(metrica);
+        this.nivelIndicador.setIdnivelmodelo(idnivelmodelo);
         this.nivelIndicador.modificarNivelIndicador();
     }
 }
