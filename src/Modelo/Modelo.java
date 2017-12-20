@@ -16,11 +16,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Shep
  */
-public class NivelModelo {
+public class Modelo {
     private int id;
     private String descripcion;
     public Conexion m_Conexion;
-    public NivelModelo() {
+    public Modelo() {
         this.m_Conexion = Conexion.getInstancia();
     }
 
@@ -42,8 +42,8 @@ public class NivelModelo {
     
     public DefaultTableModel obtenerNivelModelo() {
         // Tabla para mostrar lo obtenido de la consulta
-        DefaultTableModel nivelmodelo = new DefaultTableModel();
-        nivelmodelo.setColumnIdentifiers(new Object[]{  //nombre, ci, cargo, fechanacimiento, sexo, direccion
+        DefaultTableModel modelos = new DefaultTableModel();
+        modelos.setColumnIdentifiers(new Object[]{  //nombre, ci, cargo, fechanacimiento, sexo, direccion
             "id", "descripcion"
         });
 
@@ -53,9 +53,9 @@ public class NivelModelo {
 
         // Preparo la consulta
         String sql = "SELECT\n"
-                + "nivelmodelo.id,\n"
-                + "nivelmodelo.descripcion\n"
-                + "FROM nivelmodelo";
+                + "modelos.id,\n"
+                + "modelos.descripcion\n"
+                + "FROM modelos";
 
         try {
             // La ejecuto
@@ -68,7 +68,7 @@ public class NivelModelo {
             // Recorro el resultado
             while (rs.next()) {
                 // Agrego las tuplas a mi tabla
-                nivelmodelo.addRow(new Object[]{
+                modelos.addRow(new Object[]{
                     rs.getInt("id"),
                     rs.getString("descripcion")
                 });
@@ -76,7 +76,7 @@ public class NivelModelo {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return nivelmodelo;
+        return modelos;
     }
     
     public int registrarNivelModelo() {
@@ -85,7 +85,7 @@ public class NivelModelo {
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "INSERT INTO public.nivelmodelo(\n" +
+        String sql = "INSERT INTO public.modelos(\n" +
                     "	descripcion)\n" +
                     "	VALUES (?);";
 
@@ -118,9 +118,9 @@ public class NivelModelo {
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "UPDATE nivelmodelo SET\n"
+        String sql = "UPDATE modelos SET\n"
                 + "descripcion = ?\n"
-                + "WHERE nivelmodelo.id = ?";
+                + "WHERE modelos.id = ?";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);
@@ -136,8 +136,8 @@ public class NivelModelo {
     
     public DefaultTableModel getNivelModelo(int id) {
         // Tabla para mostrar lo obtenido de la consulta
-        DefaultTableModel nivelmodelo = new DefaultTableModel();
-        nivelmodelo.setColumnIdentifiers(new Object[]{
+        DefaultTableModel modelos = new DefaultTableModel();
+        modelos.setColumnIdentifiers(new Object[]{
             "id", "descripcion"
         });
 
@@ -147,10 +147,10 @@ public class NivelModelo {
 
         // Preparo la consulta
         String sql = "SELECT\n"
-                + "nivelmodelo.id,\n"
-                + "nivelmodelo.descripcion,\n"
-                + "FROM nivelmodelo\n"
-                + "WHERE nivelmodelo.id=?";
+                + "modelos.id,\n"
+                + "modelos.descripcion,\n"
+                + "FROM modelos\n"
+                + "WHERE modelos.id=?";
         // Los simbolos de interrogacion son para mandar parametros 
         // a la consulta al momento de ejecutalas
 
@@ -166,7 +166,7 @@ public class NivelModelo {
             // Recorro el resultado
             while (rs.next()) {
                 // Agrego las tuplas a mi tabla
-                nivelmodelo.addRow(new Object[]{
+                modelos.addRow(new Object[]{
                     rs.getInt("id"),
                     rs.getString("descripcion")
                 });
@@ -174,15 +174,15 @@ public class NivelModelo {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return nivelmodelo;
+        return modelos;
     }
     public void eliminarNivelModelo(int id){
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "DELETE FROM nivelmodelo\n"
-                + "WHERE nivelmodelo.id = ?\n";
+        String sql = "DELETE FROM modelos\n"
+                + "WHERE modelos.id = ?\n";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);

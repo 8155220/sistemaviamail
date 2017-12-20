@@ -16,11 +16,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Shep
  */
-public class TipoEncuesta {
+public class TipoUsuario {
     private int id;
     private String descripcion;
     public Conexion m_Conexion;
-    public TipoEncuesta() {
+    public TipoUsuario() {
         this.m_Conexion = Conexion.getInstancia();
     }
 
@@ -40,7 +40,7 @@ public class TipoEncuesta {
         this.descripcion = descripcion;
     }
     
-    public DefaultTableModel obtenerTipoEncuesta() {
+    public DefaultTableModel obtenerTipoUsuario() {
         // Tabla para mostrar lo obtenido de la consulta
         DefaultTableModel tipoEncuesta = new DefaultTableModel();
         tipoEncuesta.setColumnIdentifiers(new Object[]{  //nombre, ci, cargo, fechanacimiento, sexo, direccion
@@ -53,9 +53,9 @@ public class TipoEncuesta {
 
         // Preparo la consulta
         String sql = "SELECT\n"
-                + "tipoencuesta.id,\n"
-                + "tipoencuesta.descripcion\n"
-                + "FROM tipoencuesta";
+                + "tipo_usuarios.id,\n"
+                + "tipo_usuarios.descripcion\n"
+                + "FROM tipo_usuarios";
 
         try {
             // La ejecuto
@@ -79,13 +79,13 @@ public class TipoEncuesta {
         return tipoEncuesta;
     }
     
-    public int registrarTipoEncuesta() {
+    public int registrarTipoUsuario() {
         // Abro y obtengo la conexion
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "INSERT INTO public.tipoencuesta(\n" +
+        String sql = "INSERT INTO public.tipo_usuarios(\n" +
                     "	descripcion)\n" +
                     "	VALUES (?);";
 
@@ -112,15 +112,15 @@ public class TipoEncuesta {
         }
         return 0;
     }
-    public void modificarTipoEncuesta() {
+    public void modificarTipoUsuario() {
         // Abro y obtengo la conexion
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "UPDATE tipoencuesta SET\n"
+        String sql = "UPDATE tipo_usuarios SET\n"
                 + "descripcion = ?\n"
-                + "WHERE tipoencuesta.id = ?";
+                + "WHERE tipo_usuarios.id = ?";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);
@@ -134,7 +134,7 @@ public class TipoEncuesta {
         }
     }
     
-    public DefaultTableModel getTipoEncuesta(int id) {
+    public DefaultTableModel getTipoUsuario(int id) {
         // Tabla para mostrar lo obtenido de la consulta
         DefaultTableModel tipoEncuesta = new DefaultTableModel();
         tipoEncuesta.setColumnIdentifiers(new Object[]{
@@ -147,10 +147,10 @@ public class TipoEncuesta {
 
         // Preparo la consulta
         String sql = "SELECT\n"
-                + "tipoencuesta.id,\n"
-                + "tipoencuesta.descripcion,\n"
-                + "FROM tipoencuesta\n"
-                + "WHERE tipoencuesta.id=?";
+                + "tipo_usuarios.id,\n"
+                + "tipo_usuarios.descripcion,\n"
+                + "FROM tipo_usuarios\n"
+                + "WHERE tipo_usuarios.id=?";
         // Los simbolos de interrogacion son para mandar parametros 
         // a la consulta al momento de ejecutalas
 
@@ -176,13 +176,13 @@ public class TipoEncuesta {
         }
         return tipoEncuesta;
     }
-    public void eliminarTipoEncuesta(int id){
+    public void eliminarTipoUsuario(int id){
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "DELETE FROM tipoencuesta\n"
-                + "WHERE tipoencuesta.id = ?\n";
+        String sql = "DELETE FROM tipo_usuarios\n"
+                + "WHERE tipo_usuarios.id = ?\n";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);

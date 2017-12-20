@@ -8,9 +8,9 @@ package software;
 import Negocio.DetalleUsuarioEncuestaNegocio;
 import Negocio.EncuestaNegocio;
 import Negocio.FacultadNegocio;
-import Negocio.NivelIndicadorNegocio;
+import Negocio.IndicadorNegocio;
 import Negocio.NivelModeloNegocio;
-import Negocio.TipoEncuestaNegocio;
+import Negocio.TipoUsuarioNegocio;
 import Negocio.UsuarioNegocio;
 import sockets.ClienteSMTP;
 import analizadorComandos.Analex;
@@ -75,42 +75,42 @@ public class ModeloMadurezMail {
             case Token.MODIFICARUSUARIO:
                 modificarUsuario(analex,destinatario);
                 break;
-            case Token.OBTENERNIVELINDICADOR:
-                obtenerNivelIndicador(analex,destinatario);
+            case Token.OBTENERINDICADOR:
+                obtenerIndicador(analex,destinatario);
                 break;
-            case Token.REGISTRARNIVELINDICADOR:
-                registrarNivelIndicador(analex,destinatario);
+            case Token.REGISTRARINDICADOR:
+                registrarIndicador(analex,destinatario);
                 break;
-            case Token.ELIMINARNIVELINDICADOR:
-                eliminarNivelIndicador(analex,destinatario);
+            case Token.ELIMINARINDICADOR:
+                eliminarIndicador(analex,destinatario);
                 break;
-            case Token.MODIFICARNIVELINDICADOR:
-                modificarNivelIndicador(analex,destinatario);
+            case Token.MODIFICARINDICADOR:
+                modificarIndicador(analex,destinatario);
                 break;
-                //TIPOENCUESTA
-            case Token.OBTENERTIPOENCUESTA:
-                obtenerTipoEncuesta(analex,destinatario);
+                //TIPOUSUARIO
+            case Token.OBTENERTIPOUSUARIO:
+                obtenerTipoUsuario(analex,destinatario);
                 break;
-            case Token.REGISTRARTIPOENCUESTA:
-                registrarTipoEncuesta(analex,destinatario);
+            case Token.REGISTRARTIPOUSUARIO:
+                registrarTipoUsuario(analex,destinatario);
                 break;
-            case Token.ELIMINARTIPOENCUESTA:
-                eliminarTipoEncuesta(analex,destinatario);
+            case Token.ELIMINARTIPOUSUARIO:
+                eliminarTipoUsuario(analex,destinatario);
                 break;
-            case Token.MODIFICARTIPOENCUESTA:
-                modificarTipoEncuesta(analex,destinatario);
+            case Token.MODIFICARTIPOUSUARIO:
+                modificarTipoUsuario(analex,destinatario);
                 break;
-                //NIVELMODELO
-            case Token.OBTENERNIVELMODELO:
+                //MODELO
+            case Token.OBTENERMODELO:
                 obtenerNivelModelo(analex,destinatario);
                 break;
-            case Token.REGISTRARNIVELMODELO:
+            case Token.REGISTRARMODELO:
                 registrarNivelModelo(analex,destinatario);
                 break;
-            case Token.ELIMINARNIVELMODELO:
+            case Token.ELIMINARMODELO:
                 eliminarNivelModelo(analex,destinatario);
                 break;
-            case Token.MODIFICARNIVELMODELO:
+            case Token.MODIFICARMODELO:
                 modificarNivelModelo(analex,destinatario);
                 break;
                 //ENCUESTA
@@ -186,24 +186,30 @@ public class ModeloMadurezMail {
         // Sino, ejecutar el comando
         UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
         analex.Avanzar();
-        // Atributos
-        String nombre = Utils.quitarComillas(analex.Preanalisis().getToStr());
+
+        String name = Utils.quitarComillas(analex.Preanalisis().getToStr());
+        analex.Avanzar();
+        analex.Avanzar();
+        String email = Utils.quitarComillas(analex.Preanalisis().getToStr());
+        analex.Avanzar();
+        analex.Avanzar();
+        String password = Utils.quitarComillas(analex.Preanalisis().getToStr());
+        analex.Avanzar();
+        analex.Avanzar();
+        String apellido = Utils.quitarComillas(analex.Preanalisis().getToStr());
+        //Date apellido = Utils.convertirFechas(Utils.quitarComillas(analex.Preanalisis().getToStr())); --> para fecha
         analex.Avanzar();
         analex.Avanzar();
         String ci = Utils.quitarComillas(analex.Preanalisis().getToStr());
         analex.Avanzar();
         analex.Avanzar();
-        String cargo = Utils.quitarComillas(analex.Preanalisis().getToStr());
+        int idtipusuario = analex.Preanalisis().getAtributo();
         analex.Avanzar();
         analex.Avanzar();
-        Date fechanacimiento = Utils.convertirFechas(Utils.quitarComillas(analex.Preanalisis().getToStr()));
-        analex.Avanzar();
-        analex.Avanzar();
-        String sexo = Utils.quitarComillas(analex.Preanalisis().getToStr());
-        analex.Avanzar();
-        analex.Avanzar();
-        String direccion = Utils.quitarComillas(analex.Preanalisis().getToStr());
-        usuarioNegocio.registrarUsuario(nombre, ci, cargo, fechanacimiento, sexo, direccion);
+        int idfacultad = analex.Preanalisis().getAtributo();
+        
+       
+        usuarioNegocio.registrarUsuario(name, email, password, apellido, ci, idtipusuario,idfacultad);
         ClienteSMTP.sendMail(correoDest, "Registrar Usuario", "Registro realizado Correctamente");
     }
 
@@ -250,27 +256,26 @@ public class ModeloMadurezMail {
         int id = analex.Preanalisis().getAtributo();
         analex.Avanzar();
         analex.Avanzar();
-        String nombre = Utils.quitarComillas(analex.Preanalisis().getToStr());
+        
+        String name = Utils.quitarComillas(analex.Preanalisis().getToStr());
+        analex.Avanzar();
+        analex.Avanzar();
+        String apellido = Utils.quitarComillas(analex.Preanalisis().getToStr());
+        //Date apellido = Utils.convertirFechas(Utils.quitarComillas(analex.Preanalisis().getToStr())); --> para fecha
         analex.Avanzar();
         analex.Avanzar();
         String ci = Utils.quitarComillas(analex.Preanalisis().getToStr());
         analex.Avanzar();
         analex.Avanzar();
-        String cargo = Utils.quitarComillas(analex.Preanalisis().getToStr());
+        int idtipousuario = analex.Preanalisis().getAtributo();
         analex.Avanzar();
         analex.Avanzar();
-        Date fechanacimiento = Utils.convertirFechas(Utils.quitarComillas(analex.Preanalisis().getToStr()));
-        analex.Avanzar();
-        analex.Avanzar();
-        String sexo = Utils.quitarComillas(analex.Preanalisis().getToStr());
-        analex.Avanzar();
-        analex.Avanzar();
-        String direccion = Utils.quitarComillas(analex.Preanalisis().getToStr());
-        usuarioNegocio.modificarUsuario(id,nombre, ci, cargo, fechanacimiento, sexo, direccion);
+        int idfacultad = analex.Preanalisis().getAtributo();
+        usuarioNegocio.modificarUsuario(id,name, apellido, ci, idtipousuario,idfacultad);
         ClienteSMTP.sendMail(correoDest, "Registrar Usuario", "Registro realizado Correctamente");
     }
 
-    private void obtenerNivelIndicador(Analex analex, String correoDest) {
+    private void obtenerIndicador(Analex analex, String correoDest) {
         analex.Avanzar();
         Token token = analex.Preanalisis();
 
@@ -281,14 +286,14 @@ public class ModeloMadurezMail {
             ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
             return;
         }
-        NivelIndicadorNegocio nivelIndicadorNegocio = new NivelIndicadorNegocio();
+        IndicadorNegocio nivelIndicadorNegocio = new IndicadorNegocio();
         // Sino, ejecutar el comando
         //AlumnoNegocio alumnoNegocio = new AlumnoNegocio();
-        String message = Utils.dibujarTabla(nivelIndicadorNegocio.obtenerNivelIndicadors());
-        ClienteSMTP.sendMail(correoDest, "Obtener NivelIndicador", message);
+        String message = Utils.dibujarTabla(nivelIndicadorNegocio.obtenerIndicadors());
+        ClienteSMTP.sendMail(correoDest, "Obtener Indicador", message);
     }
 
-    private void registrarNivelIndicador(Analex analex, String correoDest) {
+    private void registrarIndicador(Analex analex, String correoDest) {
         // Obtengo el Siguiente token
         analex.Avanzar();
         Token token = analex.Preanalisis();
@@ -302,7 +307,7 @@ public class ModeloMadurezMail {
         }
 
         // Sino, ejecutar el comando
-        NivelIndicadorNegocio nivelIndicadorNegocio = new NivelIndicadorNegocio();
+        IndicadorNegocio nivelIndicadorNegocio = new IndicadorNegocio();
         analex.Avanzar();
         // Atributos
         String descripcion = Utils.quitarComillas(analex.Preanalisis().getToStr());
@@ -313,11 +318,11 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         int idnivelmodelo = analex.Preanalisis().getAtributo();
 
-        nivelIndicadorNegocio.registrarNivelIndicador(descripcion,metrica,idnivelmodelo);
-        ClienteSMTP.sendMail(correoDest, "Registrar NivelIndicador", "Registro realizado Correctamente");
+        nivelIndicadorNegocio.registrarIndicador(descripcion,metrica,idnivelmodelo);
+        ClienteSMTP.sendMail(correoDest, "Registrar Indicador", "Registro realizado Correctamente");
     }
 
-    private void eliminarNivelIndicador(Analex analex, String correoDest) {
+    private void eliminarIndicador(Analex analex, String correoDest) {
         analex.Avanzar();
         Token token = analex.Preanalisis();
 
@@ -330,17 +335,17 @@ public class ModeloMadurezMail {
         }
 
         // Sino, ejecutar el comando
-        NivelIndicadorNegocio nivelIndicadorNegocio = new NivelIndicadorNegocio();
+        IndicadorNegocio nivelIndicadorNegocio = new IndicadorNegocio();
         analex.Avanzar();
         int id = analex.Preanalisis().getAtributo();
         analex.Avanzar();
         analex.Avanzar();
         
-        nivelIndicadorNegocio.eliminarNivelIndicador(id);
-        ClienteSMTP.sendMail(correoDest, "Eliminar NivelIndicador", "Eliminacion Completada Satisfactoriamente");
+        nivelIndicadorNegocio.eliminarIndicador(id);
+        ClienteSMTP.sendMail(correoDest, "Eliminar Indicador", "Eliminacion Completada Satisfactoriamente");
     }
 
-    private void modificarNivelIndicador(Analex analex, String correoDest) {
+    private void modificarIndicador(Analex analex, String correoDest) {
         analex.Avanzar();
         Token token = analex.Preanalisis();
 
@@ -353,7 +358,7 @@ public class ModeloMadurezMail {
         }
 
         // Sino, ejecutar el comando
-        NivelIndicadorNegocio nivelIndicadorNegocio = new NivelIndicadorNegocio();
+        IndicadorNegocio nivelIndicadorNegocio = new IndicadorNegocio();
         analex.Avanzar();
         // Atributos
         // int telefono = analex.Preanalisis().getAtributo();
@@ -368,11 +373,11 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         int idnivelmodelo = analex.Preanalisis().getAtributo();
         
-        nivelIndicadorNegocio.modificarNivelIndicador(id,descripcion,metrica,idnivelmodelo);
-        ClienteSMTP.sendMail(correoDest, "Modificado NivelIndicador", "Registro realizado Correctamente");
+        nivelIndicadorNegocio.modificarIndicador(id,descripcion,metrica,idnivelmodelo);
+        ClienteSMTP.sendMail(correoDest, "Modificado Indicador", "Registro realizado Correctamente");
     }
     
-    private void obtenerTipoEncuesta(Analex analex, String correoDest) {
+    private void obtenerTipoUsuario(Analex analex, String correoDest) {
         analex.Avanzar();
         Token token = analex.Preanalisis();
 
@@ -383,14 +388,14 @@ public class ModeloMadurezMail {
             ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
             return;
         }
-        TipoEncuestaNegocio tipoEncuestaNegocio = new TipoEncuestaNegocio();
+        TipoUsuarioNegocio tipoEncuestaNegocio = new TipoUsuarioNegocio();
         // Sino, ejecutar el comando
         //AlumnoNegocio alumnoNegocio = new AlumnoNegocio();
-        String message = Utils.dibujarTabla(tipoEncuestaNegocio.obtenerTipoEncuestas());
-        ClienteSMTP.sendMail(correoDest, "Obtener TipoEncuesta", message);
+        String message = Utils.dibujarTabla(tipoEncuestaNegocio.obtenerTipoUsuarios());
+        ClienteSMTP.sendMail(correoDest, "Obtener TipoUsuario", message);
     }
 
-    private void registrarTipoEncuesta(Analex analex, String correoDest) {
+    private void registrarTipoUsuario(Analex analex, String correoDest) {
         // Obtengo el Siguiente token
         analex.Avanzar();
         Token token = analex.Preanalisis();
@@ -404,17 +409,17 @@ public class ModeloMadurezMail {
         }
 
         // Sino, ejecutar el comando
-        TipoEncuestaNegocio tipoEncuestaNegocio = new TipoEncuestaNegocio();
+        TipoUsuarioNegocio tipoEncuestaNegocio = new TipoUsuarioNegocio();
         analex.Avanzar();
         // Atributos
         String descripcion = Utils.quitarComillas(analex.Preanalisis().getToStr());
         //analex.Avanzar();
         //analex.Avanzar();
-        tipoEncuestaNegocio.registrarTipoEncuesta(descripcion);
-        ClienteSMTP.sendMail(correoDest, "Registrar TipoEncuesta", "Registro realizado Correctamente");
+        tipoEncuestaNegocio.registrarTipoUsuario(descripcion);
+        ClienteSMTP.sendMail(correoDest, "Registrar TipoUsuario", "Registro realizado Correctamente");
     }
 
-    private void eliminarTipoEncuesta(Analex analex, String correoDest) {
+    private void eliminarTipoUsuario(Analex analex, String correoDest) {
         analex.Avanzar();
         Token token = analex.Preanalisis();
 
@@ -427,16 +432,16 @@ public class ModeloMadurezMail {
         }
 
         // Sino, ejecutar el comando
-        TipoEncuestaNegocio tipoEncuestaNegocio = new TipoEncuestaNegocio();
+        TipoUsuarioNegocio tipoEncuestaNegocio = new TipoUsuarioNegocio();
         analex.Avanzar();
         int id = analex.Preanalisis().getAtributo();
         analex.Avanzar();
         analex.Avanzar();
-        tipoEncuestaNegocio.eliminarTipoEncuesta(id);
-        ClienteSMTP.sendMail(correoDest, "Eliminar TipoEncuesta", "Eliminacion Completada Satisfactoriamente");
+        tipoEncuestaNegocio.eliminarTipoUsuario(id);
+        ClienteSMTP.sendMail(correoDest, "Eliminar TipoUsuario", "Eliminacion Completada Satisfactoriamente");
     }
 
-    private void modificarTipoEncuesta(Analex analex, String correoDest) {
+    private void modificarTipoUsuario(Analex analex, String correoDest) {
         analex.Avanzar();
         Token token = analex.Preanalisis();
 
@@ -449,7 +454,7 @@ public class ModeloMadurezMail {
         }
 
         // Sino, ejecutar el comando
-        TipoEncuestaNegocio tipoEncuestaNegocio = new TipoEncuestaNegocio();
+        TipoUsuarioNegocio tipoEncuestaNegocio = new TipoUsuarioNegocio();
         analex.Avanzar();
         // Atributos
         // int telefono = analex.Preanalisis().getAtributo();
@@ -457,8 +462,8 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         analex.Avanzar();
         String descripcion = Utils.quitarComillas(analex.Preanalisis().getToStr());
-        tipoEncuestaNegocio.modificarTipoEncuesta(id,descripcion);
-        ClienteSMTP.sendMail(correoDest, "Modificado TipoEncuesta", "Registro realizado Correctamente");
+        tipoEncuestaNegocio.modificarTipoUsuario(id,descripcion);
+        ClienteSMTP.sendMail(correoDest, "Modificado TipoUsuario", "Registro realizado Correctamente");
     }
     private void obtenerNivelModelo(Analex analex, String correoDest) {
         analex.Avanzar();
@@ -590,8 +595,42 @@ public class ModeloMadurezMail {
         int idfacultad = analex.Preanalisis().getAtributo();
         analex.Avanzar();
         analex.Avanzar();
-        int idnivelmodelo = analex.Preanalisis().getAtributo();
-        encuestaNegocio.registrarEncuesta(idfacultad, idnivelmodelo);
+        String fechainicio = Utils.quitarComillas(analex.Preanalisis().getToStr());
+        analex.Avanzar();
+        analex.Avanzar();
+        String fechafin = Utils.quitarComillas(analex.Preanalisis().getToStr());
+        analex.Avanzar();
+        analex.Avanzar();
+        int idusuario1 = analex.Preanalisis().getAtributo();
+        analex.Avanzar();
+        analex.Avanzar();
+        int idusuario2 = analex.Preanalisis().getAtributo();
+        analex.Avanzar();
+        analex.Avanzar();
+        int idusuario3 = analex.Preanalisis().getAtributo();
+        analex.Avanzar();
+        analex.Avanzar();
+        int idusuario4 = analex.Preanalisis().getAtributo();
+        analex.Avanzar();
+        analex.Avanzar();
+        int idusuario5 = analex.Preanalisis().getAtributo();
+        analex.Avanzar();
+        analex.Avanzar();
+        int idusuario6 = analex.Preanalisis().getAtributo();
+        analex.Avanzar();
+        analex.Avanzar();
+        int idusuario7 = analex.Preanalisis().getAtributo();
+        analex.Avanzar();
+        analex.Avanzar();
+        int idusuario8 = analex.Preanalisis().getAtributo();
+        analex.Avanzar();
+        analex.Avanzar();
+        int idusuario9 = analex.Preanalisis().getAtributo();
+        analex.Avanzar();
+        analex.Avanzar();
+        int idusuario10 = analex.Preanalisis().getAtributo();
+        
+        encuestaNegocio.registrarEncuesta(idfacultad, fechainicio,fechafin,idusuario1,idusuario2,idusuario3,idusuario4,idusuario5,idusuario6,idusuario7,idusuario8,idusuario9,idusuario10);
         ClienteSMTP.sendMail(correoDest, "Registrar Encuesta", "Registro realizado Correctamente");
     }
 

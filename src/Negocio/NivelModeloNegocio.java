@@ -5,8 +5,8 @@
  */
 package Negocio;
 
-import Modelo.NivelIndicador;
-import Modelo.NivelModelo;
+import Modelo.Indicador;
+import Modelo.Modelo;
 import Modelo.Usuario;
 import java.sql.Date;
 import javax.swing.table.DefaultTableModel;
@@ -16,10 +16,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Shep
  */
 public class NivelModeloNegocio {
-    public NivelModelo nivelModelo;
+    public Modelo nivelModelo;
     
     public NivelModeloNegocio(){
-        this.nivelModelo = new NivelModelo();
+        this.nivelModelo = new Modelo();
     }
     public DefaultTableModel obtenerNivelModelos() {
         return this.nivelModelo.obtenerNivelModelo();

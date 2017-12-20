@@ -18,27 +18,21 @@ import javax.swing.table.DefaultTableModel;
  * @author Shep
  */
 public class Usuario {
+
     public Conexion m_Conexion;
     private int id;
-    private String nombre;
+    private String name;
+    private String email;
+    private String password;
+    private String apellido;
     private String ci;
-    private String direccion;
-    private String cargo;
-    private Date fechanacimiento;
-    private String sexo;
+    private int idtipousuario;
+    private int idfacultad;
+
     public Usuario() {
         this.m_Conexion = Conexion.getInstancia();
     }
 
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
-    
     public int getId() {
         return id;
     }
@@ -47,12 +41,36 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getCi() {
@@ -63,37 +81,28 @@ public class Usuario {
         this.ci = ci;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public int getIdtipousuario() {
+        return idtipousuario;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setIdtipousuario(int idtipousuario) {
+        this.idtipousuario = idtipousuario;
     }
 
-    public Date getFechanacimiento() {
-        return fechanacimiento;
+    public int getIdfacultad() {
+        return idfacultad;
     }
 
-    public void setFechanacimiento(Date fechanacimiento) {
-        this.fechanacimiento = fechanacimiento;
+    public void setIdfacultad(int idfacultad) {
+        this.idfacultad = idfacultad;
     }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-        
     //CRUD
-    
+
     public DefaultTableModel obtenerUsuarios() {
         // Tabla para mostrar lo obtenido de la consulta
         DefaultTableModel usuarios = new DefaultTableModel();
-        usuarios.setColumnIdentifiers(new Object[]{  //nombre, ci, cargo, fechanacimiento, sexo, direccion
-            "id", "nombre", "ci", "cargo", "fechanacimiento", "sexo", "direccion"
+        usuarios.setColumnIdentifiers(new Object[]{ //nombre, ci, cargo, fechanacimiento, sexo, direccion
+            "id", "name", "email", "apellido", "ci", "idtipousuario", "idfacultad"
         });
 
         // Abro y obtengo la conexion
@@ -102,15 +111,15 @@ public class Usuario {
 
         // Preparo la consulta
         String sql = "SELECT\n"
-                + "usuario.id,\n"
-                + "usuario.nombre,\n"
-                + "usuario.ci,\n"
-                + "usuario.cargo,\n"
-                + "usuario.fechanacimiento,\n"
-                + "usuario.sexo,\n"
-                + "usuario.direccion\n"
-                + "FROM usuario";
-
+                + "users.id,\n"
+                + "users.name,\n"
+                + "users.email,\n"
+                + "users.apellido,\n"
+                + "users.ci,\n"
+                + "users.idtipousuario,\n"
+                + "users.idfacultad\n"
+                + "FROM users";
+        
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);
@@ -124,12 +133,12 @@ public class Usuario {
                 // Agrego las tuplas a mi tabla
                 usuarios.addRow(new Object[]{
                     rs.getInt("id"),
-                    rs.getString("nombre"),
+                    rs.getString("name"),
+                    rs.getString("email"),
+                    rs.getString("apellido"),
                     rs.getString("ci"),
-                    rs.getString("cargo"),
-                    rs.getDate("fechanacimiento"),
-                    rs.getString("sexo"),
-                    rs.getString("direccion")
+                    rs.getInt("idtipousuario"),
+                    rs.getInt("idfacultad")
                 });
             }
         } catch (SQLException ex) {
@@ -137,31 +146,31 @@ public class Usuario {
         }
         return usuarios;
     }
-    
+
     public int registrarUsuario() {
         // Abro y obtengo la conexion
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "INSERT INTO public.usuario(\n" +
-                    "	nombre, ci, cargo, fechanacimiento, sexo, direccion)\n" +
-                    "	VALUES (?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO public.users(\n"
+                + "	name, email,password, apellido, ci, idtipousuario, idfacultad)\n"
+                + "	VALUES (?, ?, ?, ?, ?, ?,?);";
 
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             // El segundo parametro de usa cuando se tienen tablas que generan llaves primarias
             // es bueno cuando nuestra bd tiene las primarias autoincrementables
-            ps.setString(1, this.nombre);
-            ps.setString(2, this.ci);
-            ps.setString(3, this.cargo);
-            ps.setDate(4, this.fechanacimiento);
-            ps.setString(5, this.sexo);
-            ps.setString(6, this.direccion);
+            ps.setString(1, this.name);
+            ps.setString(2, this.email);
+            ps.setString(3, this.password);
+            ps.setString(4, this.apellido);
+            ps.setString(5, this.ci);
+            ps.setInt(6, this.idtipousuario);
+            ps.setInt(7, this.idfacultad);
             int rows = ps.executeUpdate();
 
-            // Cierro Conexion
             this.m_Conexion.cerrarConexion();
 
             // Obtengo el id generado pra devolverlo
@@ -176,30 +185,30 @@ public class Usuario {
         }
         return 0;
     }
+
     public void modificarUsuario() {
         // Abro y obtengo la conexion
         this.m_Conexion.abrirConexion();
-        Connection con = this.m_Conexion.getConexion();
-
+        Connection con = this.m_Conexion.getConexion();                 
         // Preparo la consulta
-        String sql = "UPDATE usuario SET\n"
-                + "nombre = ?,\n"
+        String sql = "UPDATE users SET\n"
+                + "name = ?,\n"
+                + "apellido = ?,\n"
                 + "ci = ?,\n"
-                + "cargo = ?,\n"
-                + "fechanacimiento = ?,\n"
-                + "sexo = ?,\n"
-                + "direccion = ?\n"
-                + "WHERE usuario.id = ?";
+                + "idtipousuario = ?,\n"
+                + "idfacultad = ?\n"
+                + "WHERE users.id = ?";
         try {
             // La ejecuto
+            
+
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, this.nombre);
-            ps.setString(2, this.ci);
-            ps.setString(3, this.cargo);
-            ps.setDate(4, this.fechanacimiento);
-            ps.setString(5, this.sexo);
-            ps.setString(6, this.direccion);
-            ps.setInt(7, this.id);
+            ps.setString(1, this.name);
+            ps.setString(2, this.apellido);
+            ps.setString(3, this.ci);
+            ps.setInt(4, this.idtipousuario);
+            ps.setInt(5, this.idfacultad);
+            ps.setInt(6, this.id);
             int rows = ps.executeUpdate();
 
             // Cierro la conexion
@@ -208,12 +217,12 @@ public class Usuario {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public DefaultTableModel getUsuario(int id) {
         // Tabla para mostrar lo obtenido de la consulta
         DefaultTableModel usuario = new DefaultTableModel();
         usuario.setColumnIdentifiers(new Object[]{
-            "id", "nombre", "ci", "cargo", "fechanacimiento", "sexo", "direccion"
+            "id", "name", "email", "apellido", "ci;", "idtipousuario", "idfacultad"
         });
 
         // Abro y obtengo la conexion
@@ -222,15 +231,16 @@ public class Usuario {
 
         // Preparo la consulta
         String sql = "SELECT\n"
-                + "usuario.id,\n"
-                + "usuario.nombre,\n"
-                + "usuario.ci,\n"
-                + "usuario.cargo,\n"
-                + "usuario.fechanacimiento,\n"
-                + "usuario.sexo,\n"
-                + "usuario.direccion\n"
-                + "FROM usuario\n"
-                + "WHERE usuario.id=?";
+                + "users.id,\n"
+                + "users.name,\n"
+                + "users.email,\n"
+                + "users.password,\n"
+                + "users.apellido,\n"
+                + "users.ci,\n"
+                + "users.idtipousuario\n"
+                + "users.idfacultad\n"
+                + "FROM users\n"
+                + "WHERE users.id=?";
         // Los simbolos de interrogacion son para mandar parametros 
         // a la consulta al momento de ejecutalas
 
@@ -261,13 +271,14 @@ public class Usuario {
         }
         return usuario;
     }
-    public void eliminarUsuario(int id){
+
+    public void eliminarUsuario(int id) {
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "DELETE FROM usuario\n"
-                + "WHERE usuario.id = ?\n";
+        String sql = "DELETE FROM users\n"
+                + "WHERE users.id = ?\n";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);

@@ -5,7 +5,7 @@
  */
 package Negocio;
 
-import Modelo.NivelIndicador;
+import Modelo.Indicador;
 import Modelo.Facultad;
 import Modelo.Usuario;
 import java.sql.Date;

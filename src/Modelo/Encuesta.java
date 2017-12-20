@@ -22,10 +22,18 @@ public class Encuesta {
 
     private int id;
     private int idfacultad;
-    private int idnivelmodelo;
-    private Date fecha;
-    private int cuantificacionmadurez;
-    private String nivelmadurezaprobado;
+    private Date fechainicio;
+    private Date fechafin;
+    private int idusuario1;
+    private int idusuario2;
+    private int idusuario3;
+    private int idusuario4;
+    private int idusuario5;
+    private int idusuario6;
+    private int idusuario7;
+    private int idusuario8;
+    private int idusuario9;
+    private int idusuario10;
     
     public Conexion m_Conexion;
     public Encuesta() {
@@ -48,37 +56,102 @@ public class Encuesta {
         this.idfacultad = idfacultad;
     }
 
-    public int getIdnivelmodelo() {
-        return idnivelmodelo;
+    public Date getFechainicio() {
+        return fechainicio;
     }
 
-    public void setIdnivelmodelo(int idnivelmodelo) {
-        this.idnivelmodelo = idnivelmodelo;
+    public void setFechainicio(Date fechainicio) {
+        this.fechainicio = fechainicio;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getFechafin() {
+        return fechafin;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFechafin(Date fechafin) {
+        this.fechafin = fechafin;
     }
 
-    public int getCuantificacionmadurez() {
-        return cuantificacionmadurez;
+    public int getIdusuario1() {
+        return idusuario1;
     }
 
-    public void setCuantificacionmadurez(int cuantificacionmadurez) {
-        this.cuantificacionmadurez = cuantificacionmadurez;
+    public void setIdusuario1(int idusuario1) {
+        this.idusuario1 = idusuario1;
     }
 
-    public String getNivelmadurezaprobado() {
-        return nivelmadurezaprobado;
+    public int getIdusuario2() {
+        return idusuario2;
     }
 
-    public void setNivelmadurezaprobado(String nivelmadurezaprobado) {
-        this.nivelmadurezaprobado = nivelmadurezaprobado;
+    public void setIdusuario2(int idusuario2) {
+        this.idusuario2 = idusuario2;
     }
+
+    public int getIdusuario3() {
+        return idusuario3;
+    }
+
+    public void setIdusuario3(int idusuario3) {
+        this.idusuario3 = idusuario3;
+    }
+
+    public int getIdusuario4() {
+        return idusuario4;
+    }
+
+    public void setIdusuario4(int idusuario4) {
+        this.idusuario4 = idusuario4;
+    }
+
+    public int getIdusuario5() {
+        return idusuario5;
+    }
+
+    public void setIdusuario5(int idusuario5) {
+        this.idusuario5 = idusuario5;
+    }
+
+    public int getIdusuario6() {
+        return idusuario6;
+    }
+
+    public void setIdusuario6(int idusuario6) {
+        this.idusuario6 = idusuario6;
+    }
+
+    public int getIdusuario7() {
+        return idusuario7;
+    }
+
+    public void setIdusuario7(int idusuario7) {
+        this.idusuario7 = idusuario7;
+    }
+
+    public int getIdusuario8() {
+        return idusuario8;
+    }
+
+    public void setIdusuario8(int idusuario8) {
+        this.idusuario8 = idusuario8;
+    }
+
+    public int getIdusuario9() {
+        return idusuario9;
+    }
+
+    public void setIdusuario9(int idusuario9) {
+        this.idusuario9 = idusuario9;
+    }
+
+    public int getIdusuario10() {
+        return idusuario10;
+    }
+
+    public void setIdusuario10(int idusuario10) {
+        this.idusuario10 = idusuario10;
+    }
+    
     /*
     public DefaultTableModel obtenerEncuestas() {
         // Tabla para mostrar lo obtenido de la consulta
@@ -127,23 +200,32 @@ public class Encuesta {
         return encuestas;
     }*/
     
+    /*
+    private int id;
+    private int idfacultad;
+    private Date fechainicio;
+    private Date fechafin;
+    private int idusuario1;
+    */
  public DefaultTableModel obtenerEncuestas() {
         // Tabla para mostrar lo obtenido de la consulta
         DefaultTableModel encuestas = new DefaultTableModel();
         encuestas.setColumnIdentifiers(new Object[]{ //nombre, ci, cargo, fechanacimiento, sexo, direccion
-            "id", "facultad", "modelo", "fecha", "cuantificacionmadurez", "nivelmadurezaprobado"
+            "id", "facultad", "fechaInicio", "fechaFin"
         });
             this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
         // Preparo la consulta
-        String sql = "SELECT e.id,f.descripcion descripcionfacultad,nm.descripcion descripcionnivelmodelo,e.fecha,e.cuantificacionmadurez,e.nivelmadurezaprobado from encuesta e,facultad f,nivelmodelo nm where e.idfacultad=f.id and e.idnivelmodelo=nm.id";
-
+       // String sql = "SELECT e.id,f.descripcion descripcionfacultad,nm.descripcion descripcionnivelmodelo,e.fecha,e.cuantificacionmadurez,e.nivelmadurezaprobado from encuesta e,facultad f,nivelmodelo nm where e.idfacultad=f.id and e.idnivelmodelo=nm.id";
+       String sql = "SELECT e.id,\n" +
+                    "f.descripcion descripcionfacultad,\n" +
+                    "e.fechainicio,\n" +
+                    "e.fechafin\n" +
+                    "from encuestas e,facultads f where e.idfacultad=f.id";
         try {
             // La ejecuto
-            System.out.println("ERROR AQUI : "+ sql);
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-
             // Cierro la conexion
             this.m_Conexion.cerrarConexion();
 
@@ -153,10 +235,8 @@ public class Encuesta {
                 encuestas.addRow(new Object[]{
                     rs.getInt("id"),
                     rs.getString("descripcionfacultad"),
-                    rs.getString("descripcionnivelmodelo"),
-                    rs.getDate("fecha"),
-                    rs.getInt("cuantificacionmadurez"),
-                    rs.getString("nivelmadurezaprobado")
+                    rs.getDate("fechainicio"),
+                    rs.getDate("fechafin")
                 });
             }
         } catch (SQLException ex) {
@@ -172,10 +252,15 @@ public class Encuesta {
         // Preparo la consulta
         
     
-        String sql = "INSERT INTO public.encuesta(\n"
-                + "	idfacultad, idnivelmodelo, fecha)\n"
-                + "	VALUES (?, ?, ?);"; 
-
+        String sql = "INSERT INTO public.encuestas(\n"
+                + "	idfacultad, fechainicio, fechafin,idusuario1,idusuario2,idusuario3,idusuario4,idusuario5,idusuario6,idusuario7,idusuario8,idusuario9,idusuario10)\n"
+                + "	VALUES (?, ?, ?,?,?,?,?,?,?,?,?,?,?);"; 
+/*
+            private int idfacultad;
+    private Date fechainicio;
+    private Date fechafin;
+    private int idusuario1;
+        */
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -183,12 +268,22 @@ public class Encuesta {
             // es bueno cuando nuestra bd tiene las primarias autoincrementables
             
             //registrando la fecha actual en this.fecha 
-            this.fecha = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+            //this.fechainicio = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+            //this.fechainicio = new java.sql.Date(Calendar.getInstance().getTime().getTime());
             ps.setInt(1, this.idfacultad);
-            ps.setInt(2, this.idnivelmodelo);
-            ps.setDate(3, this.fecha);
+            ps.setDate(2, this.fechainicio);
+            ps.setDate(3, this.fechafin);
+            ps.setInt(4, this.idusuario1);
+            ps.setInt(5, this.idusuario2);
+            ps.setInt(6, this.idusuario3);
+            ps.setInt(7, this.idusuario4);
+            ps.setInt(8, this.idusuario5);
+            ps.setInt(9, this.idusuario6);
+            ps.setInt(10, this.idusuario7);
+            ps.setInt(11, this.idusuario8);
+            ps.setInt(12, this.idusuario9);
+            ps.setInt(13, this.idusuario10);
             int rows = ps.executeUpdate();
-
             // Cierro Conexion
             this.m_Conexion.cerrarConexion();
 
@@ -298,8 +393,8 @@ public class Encuesta {
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "DELETE FROM encuesta\n"
-                + "WHERE encuesta.id = ?\n";
+        String sql = "DELETE FROM encuestas\n"
+                + "WHERE encuestas.id = ?\n";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);

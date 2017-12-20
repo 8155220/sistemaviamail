@@ -6,6 +6,7 @@
 package Negocio;
 import Modelo.Encuesta;
 import Modelo.Usuario;
+import utils.Utils;
 import java.sql.Date;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -31,10 +32,22 @@ public class EncuestaNegocio {
     public DefaultTableModel obtenerEncuesta(int id) {
         return this.encuesta.getEncuesta(id);
     }
-    public int registrarEncuesta(int idfacultad, int idnivelmodelo) {
+    public int registrarEncuesta(int idfacultad, String fechainicio,String fechafin,int idusuario1,int idusuario2,int idusuario3,int idusuario4,int idusuario5,int idusuario6,int idusuario7,int idusuario8,int idusuario9,int idusuario10) {
         // No olvidar primero settear los datos
         this.encuesta.setIdfacultad(idfacultad);
-        this.encuesta.setIdnivelmodelo(idnivelmodelo);
+        this.encuesta.setFechainicio(Utils.convertirFechas(fechainicio));
+        this.encuesta.setFechafin(Utils.convertirFechas(fechainicio));
+        this.encuesta.setIdusuario1(idusuario1);
+        this.encuesta.setIdusuario2(idusuario2);
+        this.encuesta.setIdusuario3(idusuario3);
+        this.encuesta.setIdusuario4(idusuario4);
+        this.encuesta.setIdusuario5(idusuario5);
+        this.encuesta.setIdusuario6(idusuario6);
+        this.encuesta.setIdusuario7(idusuario7);
+        this.encuesta.setIdusuario8(idusuario8);
+        this.encuesta.setIdusuario9(idusuario9);
+        this.encuesta.setIdusuario10(idusuario10);
+        
         return this.encuesta.registrarEncuesta();
     }
     public void eliminarEncuesta(int id){

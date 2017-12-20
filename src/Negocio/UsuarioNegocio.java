@@ -30,27 +30,27 @@ public class UsuarioNegocio {
     public DefaultTableModel obtenerUsuario(int id) {
         return this.usuario.getUsuario(id);
     }
-    public int registrarUsuario(String nombre, String ci, String cargo, Date fechanacimiento, String sexo, String direccion) {
+    public int registrarUsuario(String name, String email, String password, String apellido, String ci, int idtipousuario,int idfacultad) {
         // No olvidar primero settear los datos
-        this.usuario.setNombre(nombre);
+        this.usuario.setName(name);
+        this.usuario.setEmail(email);
+        this.usuario.setPassword(password);
+        this.usuario.setApellido(apellido);
         this.usuario.setCi(ci);
-        this.usuario.setDireccion(direccion);
-        this.usuario.setCargo(cargo);
-        this.usuario.setFechanacimiento(fechanacimiento);
-        this.usuario.setSexo(sexo);
+        this.usuario.setIdtipousuario(idtipousuario);
+        this.usuario.setIdfacultad(idfacultad);
         return this.usuario.registrarUsuario();
     }
     public void eliminarUsuario(int id){
         this.usuario.eliminarUsuario(id);
     }
-    public void modificarUsuario(int id,String nombre, String ci, String cargo, Date fechanacimiento, String sexo, String direccion) {
+    public void modificarUsuario(int id,String name, String apellido, String ci, int idtipousuario,int idfacultad) {
         this.usuario.setId(id);
-        this.usuario.setNombre(nombre);
+        this.usuario.setName(name);
+        this.usuario.setApellido(apellido);
         this.usuario.setCi(ci);
-        this.usuario.setDireccion(direccion);
-        this.usuario.setCargo(cargo);
-        this.usuario.setFechanacimiento(fechanacimiento);
-        this.usuario.setSexo(sexo);
+        this.usuario.setIdtipousuario(idtipousuario);
+        this.usuario.setIdfacultad(idfacultad);
         this.usuario.modificarUsuario();
     }
 }

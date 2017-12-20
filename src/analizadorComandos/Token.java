@@ -32,20 +32,20 @@ public class Token {
     public static final int ELIMINARUSUARIO = 202;
     public static final int MODIFICARUSUARIO = 203;
     
-    public static final int OBTENERNIVELINDICADOR = 204;
-    public static final int REGISTRARNIVELINDICADOR = 205;
-    public static final int ELIMINARNIVELINDICADOR = 206;
-    public static final int MODIFICARNIVELINDICADOR = 207;
-    //TIPOENCUESTA
-    public static final int OBTENERTIPOENCUESTA = 208;
-    public static final int REGISTRARTIPOENCUESTA = 209;
-    public static final int ELIMINARTIPOENCUESTA = 210;
-    public static final int MODIFICARTIPOENCUESTA = 211;
-    //NIVELMODELO
-    public static final int OBTENERNIVELMODELO = 212;
-    public static final int REGISTRARNIVELMODELO = 213;
-    public static final int ELIMINARNIVELMODELO = 214;
-    public static final int MODIFICARNIVELMODELO = 215;
+    public static final int OBTENERINDICADOR = 204;
+    public static final int REGISTRARINDICADOR = 205;
+    public static final int ELIMINARINDICADOR = 206;
+    public static final int MODIFICARINDICADOR = 207;
+    //TIPOUSUARIO
+    public static final int OBTENERTIPOUSUARIO = 208;
+    public static final int REGISTRARTIPOUSUARIO = 209;
+    public static final int ELIMINARTIPOUSUARIO = 210;
+    public static final int MODIFICARTIPOUSUARIO = 211;
+    //MODELO
+    public static final int OBTENERMODELO = 212;
+    public static final int REGISTRARMODELO = 213;
+    public static final int ELIMINARMODELO = 214;
+    public static final int MODIFICARMODELO = 215;
     //ENCUESTA
     public static final int OBTENERENCUESTA = 216;
     public static final int REGISTRARENCUESTA = 217;
