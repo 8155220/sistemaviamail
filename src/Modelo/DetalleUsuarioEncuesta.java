@@ -121,6 +121,7 @@ public class DetalleUsuarioEncuesta {
         }
         return detalleusuarioencuestas;
     }
+    /*
     public int registrarDetalleUsuarioEncuesta() {
         // Abro y obtengo la conexion
         this.m_Conexion.abrirConexion();
@@ -147,6 +148,71 @@ public class DetalleUsuarioEncuesta {
             ps.setInt(5,this.respuesta);
             int rows = ps.executeUpdate();
 
+            // Cierro Conexion
+            this.m_Conexion.cerrarConexion();
+
+            // Obtengo el id generado pra devolverlo
+            if (rows != 0) {
+                ResultSet generateKeys = ps.getGeneratedKeys();
+                if (generateKeys.next()) {
+                    return generateKeys.getInt(1);
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return 0;
+    }
+    */
+    public int registrarDetalleUsuarioEncuesta() {
+        // Abro y obtengo la conexion
+        this.m_Conexion.abrirConexion();
+        Connection con = this.m_Conexion.getConexion();
+
+        // Preparo la consulta
+        
+    
+        String sql = "INSERT INTO public.detalle_usuario_encuesta(\n" +
+                    "	idencuesta, idnivelmodelo, idnivelindicador, idusuario, respuesta)\n" +
+                    "	VALUES (?, ?, ?, ?, ?);"; 
+
+        try {
+            // La ejecuto
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            // El segundo parametro de usa cuando se tienen tablas que generan llaves primarias
+            // es bueno cuando nuestra bd tiene las primarias autoincrementables
+            
+            //registrando la fecha actual en this.fecha 
+            ps.setInt(1, this.idencuesta);
+            ps.setInt(2, this.idnivelmodelo);
+            ps.setInt(3, this.idnivelindicador);
+            ps.setInt(4, this.idusuario);
+            ps.setInt(5,this.respuesta);
+            int rows = ps.executeUpdate();
+
+            //INVENTO
+            sql = "select avg(respuesta*100) promedio from detalle_usuario_encuesta where idencuesta=?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idencuesta);
+            ResultSet rs = ps.executeQuery();
+            int promedio = 0;
+            while (rs.next()) {
+                // Agrego las tuplas a mi tabla
+                promedio = rs.getInt("promedio");
+            }
+            sql = "UPDATE encuesta SET\n"
+                + "cuantificacionmadurez = ?,\n"
+                + "nivelmadurezaprobado = ?\n"
+                + "WHERE id = ?";
+            // La ejecuto
+            System.out.println("ELPROMEDIOES : "+promedio);
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, promedio);
+            ps.setString(2, "Test");
+            ps.setString(2, "Test");
+            ps.setInt(2, this.idencuesta);
+            rows = ps.executeUpdate();
+            
             // Cierro Conexion
             this.m_Conexion.cerrarConexion();
 

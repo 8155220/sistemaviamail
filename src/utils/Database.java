@@ -11,7 +11,9 @@ package utils;
  */
 public class Database {
     // Constantes de la BAse de Datos
-    public static final String DB_HOST = "mail.ficct.uagrm.edu.bo";
+    //public static final String DB_HOST = "mail.ficct.uagrm.edu.bo";
+    //public static final String DB_HOST = "virtual.fcet.uagrm.edu.bo";
+    public static final String DB_HOST = "localhost";
     public static final String DB_USER = "grupo06sa";
     public static final String DB_PASSWORD = "grupo06grupo06";
     public static final String DB_NAME = "db_grupo06sa";

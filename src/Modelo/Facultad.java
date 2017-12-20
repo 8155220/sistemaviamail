@@ -42,8 +42,8 @@ public class Facultad {
     
     public DefaultTableModel obtenerFacultad() {
         // Tabla para mostrar lo obtenido de la consulta
-        DefaultTableModel facultad = new DefaultTableModel();
-        facultad.setColumnIdentifiers(new Object[]{  //nombre, ci, cargo, fechanacimiento, sexo, direccion
+        DefaultTableModel facultads = new DefaultTableModel();
+        facultads.setColumnIdentifiers(new Object[]{  //nombre, ci, cargo, fechanacimiento, sexo, direccion
             "id", "descripcion"
         });
 
@@ -53,9 +53,9 @@ public class Facultad {
 
         // Preparo la consulta
         String sql = "SELECT\n"
-                + "facultad.id,\n"
-                + "facultad.descripcion\n"
-                + "FROM facultad";
+                + "facultads.id,\n"
+                + "facultads.descripcion\n"
+                + "FROM facultads";
 
         try {
             // La ejecuto
@@ -68,7 +68,7 @@ public class Facultad {
             // Recorro el resultado
             while (rs.next()) {
                 // Agrego las tuplas a mi tabla
-                facultad.addRow(new Object[]{
+                facultads.addRow(new Object[]{
                     rs.getInt("id"),
                     rs.getString("descripcion")
                 });
@@ -76,7 +76,7 @@ public class Facultad {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return facultad;
+        return facultads;
     }
     
     public int registrarFacultad() {
@@ -85,7 +85,7 @@ public class Facultad {
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "INSERT INTO public.facultad(\n" +
+        String sql = "INSERT INTO public.facultads(\n" +
                     "	descripcion)\n" +
                     "	VALUES (?);";
 
@@ -118,9 +118,9 @@ public class Facultad {
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "UPDATE facultad SET\n"
+        String sql = "UPDATE facultads SET\n"
                 + "descripcion = ?\n"
-                + "WHERE facultad.id = ?";
+                + "WHERE facultads.id = ?";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);
@@ -136,8 +136,8 @@ public class Facultad {
     
     public DefaultTableModel getFacultad(int id) {
         // Tabla para mostrar lo obtenido de la consulta
-        DefaultTableModel facultad = new DefaultTableModel();
-        facultad.setColumnIdentifiers(new Object[]{
+        DefaultTableModel facultads = new DefaultTableModel();
+        facultads.setColumnIdentifiers(new Object[]{
             "id", "descripcion"
         });
 
@@ -147,10 +147,10 @@ public class Facultad {
 
         // Preparo la consulta
         String sql = "SELECT\n"
-                + "facultad.id,\n"
-                + "facultad.descripcion,\n"
-                + "FROM facultad\n"
-                + "WHERE facultad.id=?";
+                + "facultads.id,\n"
+                + "facultads.descripcion,\n"
+                + "FROM facultads\n"
+                + "WHERE facultads.id=?";
         // Los simbolos de interrogacion son para mandar parametros 
         // a la consulta al momento de ejecutalas
 
@@ -166,7 +166,7 @@ public class Facultad {
             // Recorro el resultado
             while (rs.next()) {
                 // Agrego las tuplas a mi tabla
-                facultad.addRow(new Object[]{
+                facultads.addRow(new Object[]{
                     rs.getInt("id"),
                     rs.getString("descripcion")
                 });
@@ -174,15 +174,15 @@ public class Facultad {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return facultad;
+        return facultads;
     }
     public void eliminarFacultad(int id){
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        String sql = "DELETE FROM facultad\n"
-                + "WHERE facultad.id = ?\n";
+        String sql = "DELETE FROM facultads\n"
+                + "WHERE facultads.id = ?\n";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);

@@ -31,7 +31,7 @@ public class ClientePOP {
             writer = new DataOutputStream(socket.getOutputStream());
 
             if (socket != null && reader != null && writer != null) {
-                //System.out.println("Entro");
+                System.out.println("Entro");
                 reader.readLine();
                 // Autenticando Usuario
                 command = "USER " + Constants.MAIL_USER + "\r\n";

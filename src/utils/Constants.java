@@ -16,9 +16,11 @@ public class Constants {
     public static final String MAIL_USER = "grupo01sc";
     public static final String MAIL_PASSWORD = "grupo01grupo01";
     public static final String MAIL_USERMAIL = "grupo01sc@ficct.uagrm.edu.bo";*/
-    public static final String MAIL_SERVER_HOST = "mail.ficct.uagrm.edu.bo";
+    //public static final String MAIL_SERVER_HOST = "mail.ficct.uagrm.edu.bo";
+    public static final String MAIL_SERVER_HOST = "virtual.fcet.uagrm.edu.bo";
     public static final String MAIL_USER = "grupo06sa";
     public static final String MAIL_PASSWORD = "grupo06grupo06";
+    //public static final String MAIL_USERMAIL = "grupo06sa@ficct.uagrm.edu.bo";
     public static final String MAIL_USERMAIL = "grupo06sa@ficct.uagrm.edu.bo";
     
     // Time for Server Request

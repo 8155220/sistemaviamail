@@ -371,6 +371,7 @@ public class ModeloMadurezMail {
         nivelIndicadorNegocio.modificarNivelIndicador(id,descripcion,metrica,idnivelmodelo);
         ClienteSMTP.sendMail(correoDest, "Modificado NivelIndicador", "Registro realizado Correctamente");
     }
+    
     private void obtenerTipoEncuesta(Analex analex, String correoDest) {
         analex.Avanzar();
         Token token = analex.Preanalisis();
