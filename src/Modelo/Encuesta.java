@@ -11,15 +11,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
 import javax.swing.table.DefaultTableModel;
+import sockets.ClienteSMTP;
+import utils.Utils;
 
 /**
  *
  * @author Shep
  */
 public class Encuesta {
-
+    
     private int id;
     private int idfacultad;
     private Date fechainicio;
@@ -36,122 +40,125 @@ public class Encuesta {
     private int idusuario10;
     
     public Conexion m_Conexion;
+    
+    public Usuario u = new Usuario();
+    
     public Encuesta() {
         this.m_Conexion = Conexion.getInstancia();
     }
-
+    
     public int getId() {
         return id;
     }
-
+    
     public void setId(int id) {
         this.id = id;
     }
-
+    
     public int getIdfacultad() {
         return idfacultad;
     }
-
+    
     public void setIdfacultad(int idfacultad) {
         this.idfacultad = idfacultad;
     }
-
+    
     public Date getFechainicio() {
         return fechainicio;
     }
-
+    
     public void setFechainicio(Date fechainicio) {
         this.fechainicio = fechainicio;
     }
-
+    
     public Date getFechafin() {
         return fechafin;
     }
-
+    
     public void setFechafin(Date fechafin) {
         this.fechafin = fechafin;
     }
-
+    
     public int getIdusuario1() {
         return idusuario1;
     }
-
+    
     public void setIdusuario1(int idusuario1) {
         this.idusuario1 = idusuario1;
     }
-
+    
     public int getIdusuario2() {
         return idusuario2;
     }
-
+    
     public void setIdusuario2(int idusuario2) {
         this.idusuario2 = idusuario2;
     }
-
+    
     public int getIdusuario3() {
         return idusuario3;
     }
-
+    
     public void setIdusuario3(int idusuario3) {
         this.idusuario3 = idusuario3;
     }
-
+    
     public int getIdusuario4() {
         return idusuario4;
     }
-
+    
     public void setIdusuario4(int idusuario4) {
         this.idusuario4 = idusuario4;
     }
-
+    
     public int getIdusuario5() {
         return idusuario5;
     }
-
+    
     public void setIdusuario5(int idusuario5) {
         this.idusuario5 = idusuario5;
     }
-
+    
     public int getIdusuario6() {
         return idusuario6;
     }
-
+    
     public void setIdusuario6(int idusuario6) {
         this.idusuario6 = idusuario6;
     }
-
+    
     public int getIdusuario7() {
         return idusuario7;
     }
-
+    
     public void setIdusuario7(int idusuario7) {
         this.idusuario7 = idusuario7;
     }
-
+    
     public int getIdusuario8() {
         return idusuario8;
     }
-
+    
     public void setIdusuario8(int idusuario8) {
         this.idusuario8 = idusuario8;
     }
-
+    
     public int getIdusuario9() {
         return idusuario9;
     }
-
+    
     public void setIdusuario9(int idusuario9) {
         this.idusuario9 = idusuario9;
     }
-
+    
     public int getIdusuario10() {
         return idusuario10;
     }
-
+    
     public void setIdusuario10(int idusuario10) {
         this.idusuario10 = idusuario10;
     }
-    
+
     /*
     public DefaultTableModel obtenerEncuestas() {
         // Tabla para mostrar lo obtenido de la consulta
@@ -199,29 +206,28 @@ public class Encuesta {
         }
         return encuestas;
     }*/
-    
-    /*
+ /*
     private int id;
     private int idfacultad;
     private Date fechainicio;
     private Date fechafin;
     private int idusuario1;
-    */
- public DefaultTableModel obtenerEncuestas() {
+     */
+    public DefaultTableModel obtenerEncuestas() {
         // Tabla para mostrar lo obtenido de la consulta
         DefaultTableModel encuestas = new DefaultTableModel();
         encuestas.setColumnIdentifiers(new Object[]{ //nombre, ci, cargo, fechanacimiento, sexo, direccion
             "id", "facultad", "fechaInicio", "fechaFin"
         });
-            this.m_Conexion.abrirConexion();
+        this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
         // Preparo la consulta
-       // String sql = "SELECT e.id,f.descripcion descripcionfacultad,nm.descripcion descripcionnivelmodelo,e.fecha,e.cuantificacionmadurez,e.nivelmadurezaprobado from encuesta e,facultad f,nivelmodelo nm where e.idfacultad=f.id and e.idnivelmodelo=nm.id";
-       String sql = "SELECT e.id,\n" +
-                    "f.descripcion descripcionfacultad,\n" +
-                    "e.fechainicio,\n" +
-                    "e.fechafin\n" +
-                    "from encuestas e,facultads f where e.idfacultad=f.id";
+        // String sql = "SELECT e.id,f.descripcion descripcionfacultad,nm.descripcion descripcionnivelmodelo,e.fecha,e.cuantificacionmadurez,e.nivelmadurezaprobado from encuesta e,facultad f,nivelmodelo nm where e.idfacultad=f.id and e.idnivelmodelo=nm.id";
+        String sql = "SELECT e.id,\n"
+                + "f.descripcion descripcionfacultad,\n"
+                + "e.fechainicio,\n"
+                + "e.fechafin\n"
+                + "from encuestas e,facultads f where e.idfacultad=f.id";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql);
@@ -244,29 +250,22 @@ public class Encuesta {
         }
         return encuestas;
     }
+    
     public int registrarEncuesta() {
         // Abro y obtengo la conexion
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
 
         // Preparo la consulta
-        
-    
         String sql = "INSERT INTO public.encuestas(\n"
                 + "	idfacultad, fechainicio, fechafin,idusuario1,idusuario2,idusuario3,idusuario4,idusuario5,idusuario6,idusuario7,idusuario8,idusuario9,idusuario10)\n"
-                + "	VALUES (?, ?, ?,?,?,?,?,?,?,?,?,?,?);"; 
-/*
-            private int idfacultad;
-    private Date fechainicio;
-    private Date fechafin;
-    private int idusuario1;
-        */
+                + "	VALUES (?, ?, ?,?,?,?,?,?,?,?,?,?,?);";
         try {
             // La ejecuto
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             // El segundo parametro de usa cuando se tienen tablas que generan llaves primarias
             // es bueno cuando nuestra bd tiene las primarias autoincrementables
-            
+
             //registrando la fecha actual en this.fecha 
             //this.fechainicio = new java.sql.Date(Calendar.getInstance().getTime().getTime());
             //this.fechainicio = new java.sql.Date(Calendar.getInstance().getTime().getTime());
@@ -286,56 +285,24 @@ public class Encuesta {
             int rows = ps.executeUpdate();
             // Cierro Conexion
             this.m_Conexion.cerrarConexion();
-
+            
+            
             // Obtengo el id generado pra devolverlo
             if (rows != 0) {
                 ResultSet generateKeys = ps.getGeneratedKeys();
                 if (generateKeys.next()) {
+                    this.id = generateKeys.getInt(1);
+                    crearDetalle();
                     return generateKeys.getInt(1);
                 }
             }
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return 0;
     }
-
-    /* NO TENDRA MODIFICAR 
-    public void modificarEncuesta() {
-        // Abro y obtengo la conexion
-        this.m_Conexion.abrirConexion();
-        Connection con = this.m_Conexion.getConexion();
-
-        // Preparo la consulta
-        String sql = "UPDATE encuesta SET\n"
-                + "cantidadmiembros = ?,\n"
-                + "cuantificacionmadurez = ?,\n"
-                + "descripcion = ?,\n"
-                + "evaluacion = ?,\n"
-                + "idnivelindicador = ?,\n"
-                + "idtipoencuesta = ?,\n"
-                + "fecha = ?\n"
-                + "WHERE encuesta.id = ?";
-        try {
-            // La ejecuto
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, this.cantidadmiembros);
-            ps.setInt(2, this.cuantificacionmadurez);
-            ps.setString(3, this.descripcion);
-            ps.setInt(4, this.evaluacion);
-            ps.setInt(5, this.idnivelindicador);
-            ps.setInt(6, this.idtipoencuesta);
-            ps.setDate(7, this.fecha);
-            ps.setInt(8, this.id);
-            int rows = ps.executeUpdate();
-
-            // Cierro la conexion
-            this.m_Conexion.cerrarConexion();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    } */
-
+    
     public DefaultTableModel getEncuesta(int id) {
         // Tabla para mostrar lo obtenido de la consulta
         DefaultTableModel encuesta = new DefaultTableModel();
@@ -387,7 +354,7 @@ public class Encuesta {
         }
         return encuesta;
     }
-
+    
     public void eliminarEncuesta(int id) {
         this.m_Conexion.abrirConexion();
         Connection con = this.m_Conexion.getConexion();
@@ -405,10 +372,126 @@ public class Encuesta {
 
             // Cierro Conexion
             this.m_Conexion.cerrarConexion();
-
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
+    
+    public DefaultTableModel obtenerUsuarioEncuesta(int idencuesta) {
+        // Tabla para mostrar lo obtenido de la consulta
+        DefaultTableModel encuestas = new DefaultTableModel();
+        encuestas.setColumnIdentifiers(new Object[]{ //nombre, ci, cargo, fechanacimiento, sexo, direccion
+            "id", "nombre", "email"
+        });
+        this.m_Conexion.abrirConexion();
+        Connection con = this.m_Conexion.getConexion();
+        // Preparo la consulta
+        // String sql = "SELECT e.id,f.descripcion descripcionfacultad,nm.descripcion descripcionnivelmodelo,e.fecha,e.cuantificacionmadurez,e.nivelmadurezaprobado from encuesta e,facultad f,nivelmodelo nm where e.idfacultad=f.id and e.idnivelmodelo=nm.id";
+        String sql = "select u.id,u.name,u.email from detalle_encuesta_usuarios d,users u \n"
+                + "where u.id=d.idusuario and d.idencuesta=" + idencuesta
+                + "group by u.id order by u.id ASC";
+        try {
+            // La ejecuto
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            // Cierro la conexion
+            this.m_Conexion.cerrarConexion();
 
+            // Recorro el resultado
+            while (rs.next()) {
+                // Agrego las tuplas a mi tabla
+                encuestas.addRow(new Object[]{
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("email"),});
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return encuestas;
+    }
+    
+    public DefaultTableModel obtenerResultadoUsuario(int idencuesta, int idusuario) {
+        // Tabla para mostrar lo obtenido de la consulta
+        DefaultTableModel encuestas = new DefaultTableModel();
+        encuestas.setColumnIdentifiers(new Object[]{ //nombre, ci, cargo, fechanacimiento, sexo, direccion
+            "id", "nombre", "email", "respuesta"
+        });
+        this.m_Conexion.abrirConexion();
+        Connection con = this.m_Conexion.getConexion();
+        // Preparo la consulta
+        // String sql = "SELECT e.id,f.descripcion descripcionfacultad,nm.descripcion descripcionnivelmodelo,e.fecha,e.cuantificacionmadurez,e.nivelmadurezaprobado from encuesta e,facultad f,nivelmodelo nm where e.idfacultad=f.id and e.idnivelmodelo=nm.id";
+        String sql = "select i.id,u.name,i.descripcion,d.respuesta from detalle_encuesta_usuarios d,indicadors i,users u \n"
+                + "where d.idusuario=u.id and d.idindicador=i.id and d.idencuesta=" + idencuesta + "  and idusuario=" + idusuario + " order by i.id asc";
+        try {
+            // La ejecuto
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            // Cierro la conexion
+            this.m_Conexion.cerrarConexion();
+
+            // Recorro el resultado
+            while (rs.next()) {
+                // Agrego las tuplas a mi tabla
+                encuestas.addRow(new Object[]{
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("descripcion"),
+                    rs.getString("respuesta"),});
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return encuestas;
+    }
+    
+    private int crearDetalle() {
+        this.m_Conexion.abrirConexion();
+        Connection con = this.m_Conexion.getConexion();
+        
+        ArrayList<Integer> lista = new ArrayList<>();
+        lista.add(idusuario1);
+        lista.add(idusuario2);
+        lista.add(idusuario3);
+        lista.add(idusuario4);
+        lista.add(idusuario5);
+        lista.add(idusuario6);
+        lista.add(idusuario7);
+        lista.add(idusuario8);
+        lista.add(idusuario9);
+        lista.add(idusuario10);
+
+        
+        // Preparo la consulta
+        for (int j = 0; j < lista.size(); j++) {
+            for (int i = 1; i <= 30; i++) {
+                String sql = "INSERT INTO public.detalle_encuesta_usuarios(idencuesta,idusuario,idindicador,respuesta)"
+                        + "	VALUES (?,?, ?,?);";
+                try {
+                    PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                    ps.setInt(1, this.id);
+                    ps.setInt(2, lista.get(j));
+                    ps.setInt(3, i);
+                    ps.setString(4, "ns/nr");
+                    int rows = ps.executeUpdate();
+                    // Cierro Conexion
+                    
+                    // Obtengo el id generado pra devolverlo
+                    if (rows != 0) {
+                        ResultSet generateKeys = ps.getGeneratedKeys();
+                        if (generateKeys.next()) {
+                            //return generateKeys.getInt(1);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+            ClienteSMTP.sendMail(u.getUsuario(lista.get(j)).getEmail(), "Encuesta Pendiente", Utils.checkbox());
+        }
+        this.m_Conexion.cerrarConexion();
+        return 0;
+    }
+    
 }

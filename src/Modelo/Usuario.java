@@ -218,7 +218,7 @@ public class Usuario {
         }
     }
 
-    public DefaultTableModel getUsuario(int id) {
+    public DefaultTableModel obtenerUsuario(int id) {
         // Tabla para mostrar lo obtenido de la consulta
         DefaultTableModel usuario = new DefaultTableModel();
         usuario.setColumnIdentifiers(new Object[]{
@@ -271,6 +271,57 @@ public class Usuario {
         }
         return usuario;
     }
+    
+    
+    public Usuario getUsuario(int id) {
+        // Tabla para mostrar lo obtenido de la consulta
+        Usuario usuario = new Usuario();
+
+        // Abro y obtengo la conexion
+        this.m_Conexion.abrirConexion();
+        Connection con = this.m_Conexion.getConexion();
+
+        // Preparo la consulta
+        String sql = "SELECT\n"
+                + "users.id,\n"
+                + "users.name,\n"
+                + "users.email,\n"
+                + "users.password,\n"
+                + "users.apellido,\n"
+                + "users.ci,\n"
+                + "users.idtipousuario,\n"
+                + "users.idfacultad\n"
+                + "FROM users\n"
+                + "WHERE users.id=?";
+        // Los simbolos de interrogacion son para mandar parametros 
+        // a la consulta al momento de ejecutalas
+
+        try {
+            // La ejecuto
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            // Cierro la conexion
+            this.m_Conexion.cerrarConexion();
+
+            // Recorro el resultado
+            while (rs.next()) {
+                // Agrego las tuplas a mi tabla
+                usuario.setId(rs.getInt("id"));
+                usuario.setName(rs.getString("name"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setPassword(rs.getString("password"));
+                usuario.setApellido(rs.getString("apellido"));
+                usuario.setCi(rs.getString("ci"));
+                usuario.setIdtipousuario(rs.getInt("idtipousuario"));
+                usuario.setIdfacultad(rs.getInt("idfacultad"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return usuario;
+    }
 
     public void eliminarUsuario(int id) {
         this.m_Conexion.abrirConexion();
@@ -294,4 +345,11 @@ public class Usuario {
             System.out.println(ex.getMessage());
         }
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", apellido=" + apellido + ", ci=" + ci + ", idtipousuario=" + idtipousuario + ", idfacultad=" + idfacultad + '}';
+    }
+    
+    
 }

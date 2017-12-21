@@ -146,6 +146,12 @@ public class ModeloMadurezMail {
             case Token.ELIMINARDETALLEUSUARIOENCUESTA:
                 eliminarDetalleUsuarioEncuesta(analex,destinatario);
                 break;
+            case Token.OBTENERUSUARIOENCUESTA:
+                obtenerUsuarioEncuesta(analex,destinatario);
+                break;
+            case Token.OBTENERRESULTADOUSUARIO:
+                obtenerResultadoUsuario(analex,destinatario);
+                break;
                 
         }
     }
@@ -821,6 +827,59 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         detalleUsuarioEncuestaNegocio.eliminarDetalleUsuarioEncuesta(id);
         ClienteSMTP.sendMail(correoDest, "Eliminar DetalleUsuarioEncuesta", "Eliminacion Completada Satisfactoriamente");
+    }
+
+    private void obtenerUsuarioEncuesta(Analex analex, String correoDest) {
+        analex.Avanzar();
+        Token token = analex.Preanalisis();
+
+        // Reviso si no es ayuda
+        if (token.getNombre() == Token.HELP) {
+            // Mostrar ayuda de esa funcionalidad
+            // Enviar correo con la ayuda
+            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
+            return;
+        }
+        EncuestaNegocio encuestaNegocio = new EncuestaNegocio();
+        
+        //
+        analex.Avanzar();
+        int idencuesta = analex.Preanalisis().getAtributo();
+        analex.Avanzar();
+        analex.Avanzar();
+        //
+        // Sino, ejecutar el comando
+        //AlumnoNegocio alumnoNegocio = new AlumnoNegocio();
+        String message = Utils.dibujarTabla(encuestaNegocio.obtenerUsuarioEncuesta(idencuesta));
+        ClienteSMTP.sendMail(correoDest, "Obtener Usuarios de Encuesta", message);
+    }
+
+    private void obtenerResultadoUsuario(Analex analex, String correoDest) {
+        analex.Avanzar();
+        Token token = analex.Preanalisis();
+
+        // Reviso si no es ayuda
+        if (token.getNombre() == Token.HELP) {
+            // Mostrar ayuda de esa funcionalidad
+            // Enviar correo con la ayuda
+            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
+            return;
+        }
+        EncuestaNegocio encuestaNegocio = new EncuestaNegocio();
+        
+        //
+        analex.Avanzar();
+        int idencuesta = analex.Preanalisis().getAtributo();
+        analex.Avanzar();
+        analex.Avanzar();
+        int idusuario = analex.Preanalisis().getAtributo();
+        analex.Avanzar();
+        analex.Avanzar();
+        //
+        // Sino, ejecutar el comando
+        //AlumnoNegocio alumnoNegocio = new AlumnoNegocio();
+        String message = Utils.dibujarTabla(encuestaNegocio.obtenerResultadoUsuario(idencuesta,idusuario));
+        ClienteSMTP.sendMail(correoDest, "Obtener Usuarios de Encuesta", message);
     }
 
  

@@ -53,4 +53,11 @@ public class EncuestaNegocio {
     public void eliminarEncuesta(int id){
         this.encuesta.eliminarEncuesta(id);
     }
+    
+    public DefaultTableModel obtenerUsuarioEncuesta(int idencuesta){
+        return this.encuesta.obtenerUsuarioEncuesta(idencuesta);
+    }
+    public DefaultTableModel obtenerResultadoUsuario(int idencuesta,int idusuario){
+        return this.encuesta.obtenerResultadoUsuario(idencuesta,idusuario);
+    }
 }

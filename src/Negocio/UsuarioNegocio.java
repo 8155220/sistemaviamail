@@ -28,7 +28,7 @@ public class UsuarioNegocio {
         return this.usuario.obtenerUsuarios();
     }
     public DefaultTableModel obtenerUsuario(int id) {
-        return this.usuario.getUsuario(id);
+        return this.usuario.obtenerUsuario(id);
     }
     public int registrarUsuario(String name, String email, String password, String apellido, String ci, int idtipousuario,int idfacultad) {
         // No olvidar primero settear los datos

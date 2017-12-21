@@ -6,7 +6,9 @@
 package utils;
 
 import Modelo.Conexion;
+import Modelo.Usuario;
 import java.util.Calendar;
+import sockets.ClienteSMTP;
 import software.ModeloMadurezMail;
 
 /**
@@ -29,26 +31,28 @@ public class Tester {
         //sw.processMessage("subject:ELIMINARMODELO [7]");                                                                     
         
         //////FACULTAD
-        //sw.processMessage("subject:OBTENERFACULTAD");
+        sw.processMessage("subject:OBTENERFACULTAD");
         //sw.processMessage("subject:REGISTRARFACULTAD [\"FACULTAD 1\"] "); //REGISTRAR
         //sw.processMessage("subject:MODIFICARFACULTAD [18,\"PPEPE\"] ");                  //MODIFICAR
        // sw.processMessage("subject:ELIMINARFACULTAD [18]");                                                                    
         //////TIPOUSUARIO
-        //sw.processMessage("subject:OBTENERTIPOUSUARIO");
+        sw.processMessage("subject:OBTENERTIPOUSUARIO");
         //sw.processMessage("subject:REGISTRARTIPOUSUARIO [\"TIPOUSUARIO 1\"] "); //REGISTRAR
         //sw.processMessage("subject:MODIFICARTIPOUSUARIO [4,\"PPEPE\"] ");                  //MODIFICAR
        // sw.processMessage("subject:ELIMINARTIPOUSUARIO [4]");                                                                    
         //////ENCUESTA
-        //sw.processMessage("subject:OBTENERENCUESTA");
-        //sw.processMessage("subject:REGISTRARENCUESTA [4,\"2017-12-19\",\"2017-12-25\",2,3,4,5,6,7,8,9,10,11] "); 
+        sw.processMessage("subject:OBTENERENCUESTA");
+        //sw.processMessage("subject:REGISTRARENCUESTA [4,\"2017-12-19\",\"2017-12-25\",1005,3,4,5,6,7,8,9,10,11] "); 
        // sw.processMessage("subject:ELIMINARENCUESTA [19]");                                                              
         
        //////INDICADOR
-        //sw.processMessage("subject:OBTENERINDICADOR");
+        sw.processMessage("subject:OBTENERINDICADOR");
        // sw.processMessage("subject:REGISTRARINDICADOR [\"INDICADOR 1\",\"descripcionmetrica\",3] "); //REGISTRAR
        //w.processMessage("subject:MODIFICARINDICADOR [31,\"PPEPE\",\"des\",5] ");                  //MODIFICAR
-        sw.processMessage("subject:ELIMINARINDICADOR [31]");    
-       
+        //sw.processMessage("subject:ELIMINARINDICADOR [31]");    
+       //RESULTADOS
+       sw.processMessage("subject:OBTENERUSUARIOENCUESTA [1]"); //->Listade usuarios de la encuesta 1
+       sw.processMessage("subject:OBTENERRESULTADOUSUARIO [1,584]");//->lista rESPUESTAS encuesta 1 usuario 15
        
        
         //System.out.println("subject:REGISTRARUSUARIO [\"Pedro\",\"81646\",\"Docente\",\"2017-06-26\",\"m\",\"av cruz del sur\"]");
@@ -56,6 +60,9 @@ public class Tester {
         
         //Conexion c = Conexion.getInstancia();
         //c.abrirConexion();
+        
+        
+         //ClienteSMTP.sendHtmlMail("alfredochsoliz@gmail.com", "Encuesta Pendiente", Utils.encuestaHtml());
     }
     
 }

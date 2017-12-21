@@ -60,6 +60,11 @@ public class Token {
     public static final int OBTENERDETALLEUSUARIOENCUESTA = 224;
     public static final int REGISTRARDETALLEUSUARIOENCUESTA = 225;
     public static final int ELIMINARDETALLEUSUARIOENCUESTA = 226;
+    //CONTINUACION ENCUESTA
+    public static final int OBTENERUSUARIOENCUESTA = 227;
+    public static final int OBTENERRESULTADOUSUARIO = 228;
+    
+  
     
     //AYUDAS
     public static final int OBTENERAYUDAMETRICAS = 300;

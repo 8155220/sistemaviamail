@@ -51,7 +51,11 @@ public class TPC {
             ,
              "OBTENERDETALLEUSUARIOENCUESTA",
              "REGISTRARDETALLEUSUARIOENCUESTA",
-             "ELIMINARDETALLEUSUARIOENCUESTA"
+             "ELIMINARDETALLEUSUARIOENCUESTA",
+             
+             "OBTENERUSUARIOENCUESTA",
+             "OBTENERRESULTADOUSUARIO"
+             
     ));
 
     private static final LinkedList<Token> tokens = new LinkedList<>(Arrays.asList(
@@ -92,6 +96,9 @@ public class TPC {
              new Token(Token.FUNC, Token.REGISTRARDETALLEUSUARIOENCUESTA, "REGISTRARDETALLEUSUARIOENCUESTA"),
              new Token(Token.FUNC, Token.ELIMINARDETALLEUSUARIOENCUESTA, "ELIMINARDETALLEUSUARIOENCUESTA") //AYUDAS
             ,
+              new Token(Token.FUNC, Token.OBTENERUSUARIOENCUESTA, "OBTENERUSUARIOENCUESTA"),
+              new Token(Token.FUNC, Token.OBTENERRESULTADOUSUARIO, "OBTENERRESULTADOUSUARIO"),
+
              new Token(Token.FUNC, Token.OBTENERAYUDAMETRICAS, "OBTENERAYUDAMETRICAS")
     ));
 
