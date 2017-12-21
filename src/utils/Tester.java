@@ -20,7 +20,10 @@ public class Tester {
     
     public static void main(String[] args){
         ModeloMadurezMail sw = new ModeloMadurezMail();
+        
+        //MODIFICARUSUARIO [1003,"PEPEMODIFICADO","linares","65456465",1,1]
         //////USUARIOS
+        //REGISTRARUSUARIO ["PEPE","pepe@gmail.com","123456","linares","65456465",1,1]
         //sw.processMessage("subject:REGISTRARUSUARIO [\"PEPE\",\"pepe@gmail.com\",\"123456\",\"linares\",\"65456465\",1,1] "); 
        // sw.processMessage("subject:MODIFICARUSUARIO [1003,\"PEPEMODIFICADO\",\"linares\",\"65456465\",1,1] ");                  
         //sw.processMessage("subject:ELIMINARUSUARIO [1003]");                                                                     

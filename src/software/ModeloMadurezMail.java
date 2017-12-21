@@ -54,7 +54,7 @@ public class ModeloMadurezMail {
 
         if (token.getNombre() == Token.HELP) {
             // Mostrar Ayudas
-            ClienteSMTP.sendHtmlMail(destinatario, "Asistencia - Servicio Email", Helper.HELP_GLOBAL);
+            ClienteSMTP.sendHtmlMail(destinatario, "Asistencia - Servicio Email", Helper.HELP_GLOBAL_HTML);
             return;
         }
         System.out.println("EL TOKEN ES : "+token.getAtributo());
