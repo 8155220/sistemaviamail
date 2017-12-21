@@ -77,7 +77,7 @@ public class Indicador {
                 + "indicadors.descripcion,\n"
                 + "indicadors.metrica,\n"
                 + "modelos.descripcion idmodelo\n"
-                + "FROM indicadors,modelos where modelos.id=indicadors.idmodelo";
+                + "FROM indicadors,modelos where modelos.id=indicadors.idmodelo order by indicadors.id ASC";
 
         try {
             // La ejecuto

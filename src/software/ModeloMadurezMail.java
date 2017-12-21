@@ -42,7 +42,7 @@ public class ModeloMadurezMail {
         parser.Expresion();
         if (parser.errorFlag) {
             // Enviar Correo de Error
-            ClienteSMTP.sendMail(destinatario, "Error de Comando",
+            ClienteSMTP.sendHtmlMail(destinatario, "Error de Comando",
                     "El comando introducido es incorrecto, trate consultando las ayudas con el comando HELP"
             );
             return;
@@ -54,7 +54,7 @@ public class ModeloMadurezMail {
 
         if (token.getNombre() == Token.HELP) {
             // Mostrar Ayudas
-            ClienteSMTP.sendMail(destinatario, "Asistencia - Servicio Email", Helper.HELP_GLOBAL);
+            ClienteSMTP.sendHtmlMail(destinatario, "Asistencia - Servicio Email", Helper.HELP_GLOBAL);
             return;
         }
         System.out.println("EL TOKEN ES : "+token.getAtributo());
@@ -165,14 +165,14 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
             return;
         }
         UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
         // Sino, ejecutar el comando
         //AlumnoNegocio alumnoNegocio = new AlumnoNegocio();
-        String message = Utils.dibujarTabla(usuarioNegocio.obtenerUsuarios());
-        ClienteSMTP.sendMail(correoDest, "Obtener Usuarios", message);
+        String message = Utils.dibujarTablaHTML(usuarioNegocio.obtenerUsuarios());
+        ClienteSMTP.sendHtmlMail(correoDest, "Obtener Usuarios", message);
     }
 
     private void registrarUsuario(Analex analex, String correoDest) {
@@ -185,7 +185,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
             return;
         }
 
@@ -216,7 +216,7 @@ public class ModeloMadurezMail {
         
        
         usuarioNegocio.registrarUsuario(name, email, password, apellido, ci, idtipusuario,idfacultad);
-        ClienteSMTP.sendMail(correoDest, "Registrar Usuario", "Registro realizado Correctamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Registrar Usuario", "Registro realizado Correctamente");
     }
 
     private void eliminarUsuario(Analex analex, String correoDest) {
@@ -227,7 +227,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
             return;
         }
 
@@ -238,7 +238,7 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         analex.Avanzar();
         usuarioNegocio.eliminarUsuario(id);
-        ClienteSMTP.sendMail(correoDest, "Eliminar Usuario", "Eliminacion Completada Satisfactoriamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Eliminar Usuario", "Eliminacion Completada Satisfactoriamente");
     }
 
     private void modificarUsuario(Analex analex, String correoDest) {
@@ -250,7 +250,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_MODIFICARALUMNO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_MODIFICARALUMNO);
             return;
         }
 
@@ -278,7 +278,7 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         int idfacultad = analex.Preanalisis().getAtributo();
         usuarioNegocio.modificarUsuario(id,name, apellido, ci, idtipousuario,idfacultad);
-        ClienteSMTP.sendMail(correoDest, "Registrar Usuario", "Registro realizado Correctamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Registrar Usuario", "Registro realizado Correctamente");
     }
 
     private void obtenerIndicador(Analex analex, String correoDest) {
@@ -289,14 +289,14 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
             return;
         }
         IndicadorNegocio nivelIndicadorNegocio = new IndicadorNegocio();
         // Sino, ejecutar el comando
         //AlumnoNegocio alumnoNegocio = new AlumnoNegocio();
-        String message = Utils.dibujarTabla(nivelIndicadorNegocio.obtenerIndicadors());
-        ClienteSMTP.sendMail(correoDest, "Obtener Indicador", message);
+        String message = Utils.dibujarTablaHTML(nivelIndicadorNegocio.obtenerIndicadors());
+        ClienteSMTP.sendHtmlMail(correoDest, "Obtener Indicador", message);
     }
 
     private void registrarIndicador(Analex analex, String correoDest) {
@@ -308,7 +308,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
             return;
         }
 
@@ -325,7 +325,7 @@ public class ModeloMadurezMail {
         int idnivelmodelo = analex.Preanalisis().getAtributo();
 
         nivelIndicadorNegocio.registrarIndicador(descripcion,metrica,idnivelmodelo);
-        ClienteSMTP.sendMail(correoDest, "Registrar Indicador", "Registro realizado Correctamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Registrar Indicador", "Registro realizado Correctamente");
     }
 
     private void eliminarIndicador(Analex analex, String correoDest) {
@@ -336,7 +336,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
             return;
         }
 
@@ -348,7 +348,7 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         
         nivelIndicadorNegocio.eliminarIndicador(id);
-        ClienteSMTP.sendMail(correoDest, "Eliminar Indicador", "Eliminacion Completada Satisfactoriamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Eliminar Indicador", "Eliminacion Completada Satisfactoriamente");
     }
 
     private void modificarIndicador(Analex analex, String correoDest) {
@@ -359,7 +359,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_MODIFICARALUMNO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_MODIFICARALUMNO);
             return;
         }
 
@@ -380,7 +380,7 @@ public class ModeloMadurezMail {
         int idnivelmodelo = analex.Preanalisis().getAtributo();
         
         nivelIndicadorNegocio.modificarIndicador(id,descripcion,metrica,idnivelmodelo);
-        ClienteSMTP.sendMail(correoDest, "Modificado Indicador", "Registro realizado Correctamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Modificado Indicador", "Registro realizado Correctamente");
     }
     
     private void obtenerTipoUsuario(Analex analex, String correoDest) {
@@ -391,14 +391,14 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
             return;
         }
         TipoUsuarioNegocio tipoEncuestaNegocio = new TipoUsuarioNegocio();
         // Sino, ejecutar el comando
         //AlumnoNegocio alumnoNegocio = new AlumnoNegocio();
-        String message = Utils.dibujarTabla(tipoEncuestaNegocio.obtenerTipoUsuarios());
-        ClienteSMTP.sendMail(correoDest, "Obtener TipoUsuario", message);
+        String message = Utils.dibujarTablaHTML(tipoEncuestaNegocio.obtenerTipoUsuarios());
+        ClienteSMTP.sendHtmlMail(correoDest, "Obtener TipoUsuario", message);
     }
 
     private void registrarTipoUsuario(Analex analex, String correoDest) {
@@ -410,7 +410,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
             return;
         }
 
@@ -422,7 +422,7 @@ public class ModeloMadurezMail {
         //analex.Avanzar();
         //analex.Avanzar();
         tipoEncuestaNegocio.registrarTipoUsuario(descripcion);
-        ClienteSMTP.sendMail(correoDest, "Registrar TipoUsuario", "Registro realizado Correctamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Registrar TipoUsuario", "Registro realizado Correctamente");
     }
 
     private void eliminarTipoUsuario(Analex analex, String correoDest) {
@@ -433,7 +433,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
             return;
         }
 
@@ -444,7 +444,7 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         analex.Avanzar();
         tipoEncuestaNegocio.eliminarTipoUsuario(id);
-        ClienteSMTP.sendMail(correoDest, "Eliminar TipoUsuario", "Eliminacion Completada Satisfactoriamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Eliminar TipoUsuario", "Eliminacion Completada Satisfactoriamente");
     }
 
     private void modificarTipoUsuario(Analex analex, String correoDest) {
@@ -455,7 +455,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_MODIFICARALUMNO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_MODIFICARALUMNO);
             return;
         }
 
@@ -469,7 +469,7 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         String descripcion = Utils.quitarComillas(analex.Preanalisis().getToStr());
         tipoEncuestaNegocio.modificarTipoUsuario(id,descripcion);
-        ClienteSMTP.sendMail(correoDest, "Modificado TipoUsuario", "Registro realizado Correctamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Modificado TipoUsuario", "Registro realizado Correctamente");
     }
     private void obtenerNivelModelo(Analex analex, String correoDest) {
         analex.Avanzar();
@@ -479,14 +479,16 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
             return;
         }
         NivelModeloNegocio nivelModeloNegocio = new NivelModeloNegocio();
         // Sino, ejecutar el comando
         //AlumnoNegocio alumnoNegocio = new AlumnoNegocio();
-        String message = Utils.dibujarTabla(nivelModeloNegocio.obtenerNivelModelos());
-        ClienteSMTP.sendMail(correoDest, "Obtener NivelModelo", message);
+        //String message = Utils.dibujarTablaHTML(nivelModeloNegocio.obtenerNivelModelos()); //ORIGINAL
+        String message = Utils.dibujarTablaHTML(nivelModeloNegocio.obtenerNivelModelos());
+        //ClienteSMTP.sendHtmlMail(correoDest, "Obtener NivelModelo", message);//ORIGINAL
+        ClienteSMTP.sendHtmlMail(correoDest, "Obtener NivelModelo", message);
     }
 
     private void registrarNivelModelo(Analex analex, String correoDest) {
@@ -498,7 +500,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
             return;
         }
 
@@ -510,7 +512,7 @@ public class ModeloMadurezMail {
         //analex.Avanzar();
         //analex.Avanzar();
         nivelModeloNegocio.registrarNivelModelo(descripcion);
-        ClienteSMTP.sendMail(correoDest, "Registrar NivelModelo", "Registro realizado Correctamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Registrar NivelModelo", "Registro realizado Correctamente");
     }
 
     private void eliminarNivelModelo(Analex analex, String correoDest) {
@@ -521,7 +523,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
             return;
         }
 
@@ -532,7 +534,7 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         analex.Avanzar();
         nivelModeloNegocio.eliminarNivelModelo(id);
-        ClienteSMTP.sendMail(correoDest, "Eliminar NivelModelo", "Eliminacion Completada Satisfactoriamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Eliminar NivelModelo", "Eliminacion Completada Satisfactoriamente");
     }
 
     private void modificarNivelModelo(Analex analex, String correoDest) {
@@ -543,7 +545,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_MODIFICARALUMNO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_MODIFICARALUMNO);
             return;
         }
 
@@ -557,7 +559,7 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         String descripcion = Utils.quitarComillas(analex.Preanalisis().getToStr());
         nivelModeloNegocio.modificarNivelModelo(id,descripcion);
-        ClienteSMTP.sendMail(correoDest, "Modificado NivelModelo", "Registro realizado Correctamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Modificado NivelModelo", "Registro realizado Correctamente");
     }
     
     private void obtenerEncuestas(Analex analex, String correoDest) {
@@ -568,14 +570,14 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
             return;
         }
         EncuestaNegocio encuestaNegocio = new EncuestaNegocio();
         // Sino, ejecutar el comando
         //AlumnoNegocio alumnoNegocio = new AlumnoNegocio();
-        String message = Utils.dibujarTabla(encuestaNegocio.obtenerEncuestas());
-        ClienteSMTP.sendMail(correoDest, "Obtener Encuestas", message);
+        String message = Utils.dibujarTablaHTML(encuestaNegocio.obtenerEncuestas());
+        ClienteSMTP.sendHtmlMail(correoDest, "Obtener Encuestas", message);
         
     }
     
@@ -589,7 +591,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
             return;
         }
         //int cantidadmiembros, int cuantificacionmadurez, String descripcion, int evaluacion, int idnivelindicador, int idtipoencuesta,Date fecha
@@ -637,7 +639,7 @@ public class ModeloMadurezMail {
         int idusuario10 = analex.Preanalisis().getAtributo();
         
         encuestaNegocio.registrarEncuesta(idfacultad, fechainicio,fechafin,idusuario1,idusuario2,idusuario3,idusuario4,idusuario5,idusuario6,idusuario7,idusuario8,idusuario9,idusuario10);
-        ClienteSMTP.sendMail(correoDest, "Registrar Encuesta", "Registro realizado Correctamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Registrar Encuesta", "Registro realizado Correctamente");
     }
 
     private void eliminarEncuesta(Analex analex, String correoDest) {
@@ -648,7 +650,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
             return;
         }
 
@@ -659,7 +661,7 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         analex.Avanzar();
         encuestaNegocio.eliminarEncuesta(id);
-        ClienteSMTP.sendMail(correoDest, "Eliminar Encuesta", "Eliminacion Completada Satisfactoriamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Eliminar Encuesta", "Eliminacion Completada Satisfactoriamente");
     }
 
 
@@ -671,14 +673,14 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
             return;
         }
         FacultadNegocio facultadNegocio = new FacultadNegocio();
         // Sino, ejecutar el comando
         //AlumnoNegocio alumnoNegocio = new AlumnoNegocio();
-        String message = Utils.dibujarTabla(facultadNegocio.obtenerFacultads());
-        ClienteSMTP.sendMail(correoDest, "Obtener Facultad", message);
+        String message = Utils.dibujarTablaHTML(facultadNegocio.obtenerFacultads());
+        ClienteSMTP.sendHtmlMail(correoDest, "Obtener Facultad", message);
     }
 
     private void registrarFacultad(Analex analex, String correoDest) {
@@ -690,7 +692,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
             return;
         }
 
@@ -702,7 +704,7 @@ public class ModeloMadurezMail {
         //analex.Avanzar();
         //analex.Avanzar();
         facultadNegocio.registrarFacultad(descripcion);
-        ClienteSMTP.sendMail(correoDest, "Registrar Facultad", "Registro realizado Correctamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Registrar Facultad", "Registro realizado Correctamente");
     }
 
     private void eliminarFacultad(Analex analex, String correoDest) {
@@ -713,7 +715,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
             return;
         }
 
@@ -724,7 +726,7 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         analex.Avanzar();
         facultadNegocio.eliminarFacultad(id);
-        ClienteSMTP.sendMail(correoDest, "Eliminar Facultad", "Eliminacion Completada Satisfactoriamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Eliminar Facultad", "Eliminacion Completada Satisfactoriamente");
     }
 
     private void modificarFacultad(Analex analex, String correoDest) {
@@ -735,7 +737,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_MODIFICARALUMNO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_MODIFICARALUMNO);
             return;
         }
 
@@ -749,7 +751,7 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         String descripcion = Utils.quitarComillas(analex.Preanalisis().getToStr());
         facultadNegocio.modificarFacultad(id,descripcion);
-        ClienteSMTP.sendMail(correoDest, "Modificado Facultad", "Registro realizado Correctamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Modificado Facultad", "Registro realizado Correctamente");
     }
     
     private void obtenerDetalleUsuarioEncuestas(Analex analex, String correoDest) {
@@ -760,14 +762,14 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
             return;
         }
         DetalleUsuarioEncuestaNegocio detalleUsuarioEncuestaNegocio = new DetalleUsuarioEncuestaNegocio();
         // Sino, ejecutar el comando
         //AlumnoNegocio alumnoNegocio = new AlumnoNegocio();
-        String message = Utils.dibujarTabla(detalleUsuarioEncuestaNegocio.obtenerDetalleUsuarioEncuestas());
-        ClienteSMTP.sendMail(correoDest, "Obtener DetalleUsuarioEncuestas", message);
+        String message = Utils.dibujarTablaHTML(detalleUsuarioEncuestaNegocio.obtenerDetalleUsuarioEncuestas());
+        ClienteSMTP.sendHtmlMail(correoDest, "Obtener DetalleUsuarioEncuestas", message);
         
     }
     
@@ -781,7 +783,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_REGISTRARALUMNO);
             return;
         }
         //int cantidadmiembros, int cuantificacionmadurez, String descripcion, int evaluacion, int idnivelindicador, int idtipodetalleUsuarioEncuesta,Date fecha
@@ -804,7 +806,7 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         int respuesta = analex.Preanalisis().getAtributo();
         detalleUsuarioEncuestaNegocio.registrarDetalleUsuarioEncuesta(idencuesta, idnivelmodelo,idnivelindicador,idusuario,respuesta);
-        ClienteSMTP.sendMail(correoDest, "Registrar DetalleUsuarioEncuesta", "Registro realizado Correctamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Registrar DetalleUsuarioEncuesta", "Registro realizado Correctamente");
     }
 
     private void eliminarDetalleUsuarioEncuesta(Analex analex, String correoDest) {
@@ -815,7 +817,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_ELIMINARHORARIO);
             return;
         }
 
@@ -826,7 +828,7 @@ public class ModeloMadurezMail {
         analex.Avanzar();
         analex.Avanzar();
         detalleUsuarioEncuestaNegocio.eliminarDetalleUsuarioEncuesta(id);
-        ClienteSMTP.sendMail(correoDest, "Eliminar DetalleUsuarioEncuesta", "Eliminacion Completada Satisfactoriamente");
+        ClienteSMTP.sendHtmlMail(correoDest, "Eliminar DetalleUsuarioEncuesta", "Eliminacion Completada Satisfactoriamente");
     }
 
     private void obtenerUsuarioEncuesta(Analex analex, String correoDest) {
@@ -837,7 +839,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
             return;
         }
         EncuestaNegocio encuestaNegocio = new EncuestaNegocio();
@@ -850,8 +852,8 @@ public class ModeloMadurezMail {
         //
         // Sino, ejecutar el comando
         //AlumnoNegocio alumnoNegocio = new AlumnoNegocio();
-        String message = Utils.dibujarTabla(encuestaNegocio.obtenerUsuarioEncuesta(idencuesta));
-        ClienteSMTP.sendMail(correoDest, "Obtener Usuarios de Encuesta", message);
+        String message = Utils.dibujarTablaHTML(encuestaNegocio.obtenerUsuarioEncuesta(idencuesta));
+        ClienteSMTP.sendHtmlMail(correoDest, "Obtener Usuarios de Encuesta", message);
     }
 
     private void obtenerResultadoUsuario(Analex analex, String correoDest) {
@@ -862,7 +864,7 @@ public class ModeloMadurezMail {
         if (token.getNombre() == Token.HELP) {
             // Mostrar ayuda de esa funcionalidad
             // Enviar correo con la ayuda
-            ClienteSMTP.sendMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
+            ClienteSMTP.sendHtmlMail(correoDest, "Asistencia - Servicio Email", Helper.HELP_OBTENERALUMNOS);
             return;
         }
         EncuestaNegocio encuestaNegocio = new EncuestaNegocio();
@@ -878,8 +880,8 @@ public class ModeloMadurezMail {
         //
         // Sino, ejecutar el comando
         //AlumnoNegocio alumnoNegocio = new AlumnoNegocio();
-        String message = Utils.dibujarTabla(encuestaNegocio.obtenerResultadoUsuario(idencuesta,idusuario));
-        ClienteSMTP.sendMail(correoDest, "Obtener Usuarios de Encuesta", message);
+        String message = Utils.dibujarTablaHTML(encuestaNegocio.obtenerResultadoUsuario(idencuesta,idusuario));
+        ClienteSMTP.sendHtmlMail(correoDest, "Obtener Usuarios de Encuesta", message);
     }
 
  

@@ -55,7 +55,7 @@ public class Modelo {
         String sql = "SELECT\n"
                 + "modelos.id,\n"
                 + "modelos.descripcion\n"
-                + "FROM modelos";
+                + "FROM modelos order by id ASC";
 
         try {
             // La ejecuto

@@ -55,7 +55,7 @@ public class Facultad {
         String sql = "SELECT\n"
                 + "facultads.id,\n"
                 + "facultads.descripcion\n"
-                + "FROM facultads";
+                + "FROM facultads order by facultads.id ASC";
 
         try {
             // La ejecuto

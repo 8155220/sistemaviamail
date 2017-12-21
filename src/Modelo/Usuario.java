@@ -292,7 +292,7 @@ public class Usuario {
                 + "users.idtipousuario,\n"
                 + "users.idfacultad\n"
                 + "FROM users\n"
-                + "WHERE users.id=?";
+                + "WHERE users.id=? order by id ASC";
         // Los simbolos de interrogacion son para mandar parametros 
         // a la consulta al momento de ejecutalas
 

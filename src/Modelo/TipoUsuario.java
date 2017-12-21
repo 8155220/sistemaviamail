@@ -55,7 +55,7 @@ public class TipoUsuario {
         String sql = "SELECT\n"
                 + "tipo_usuarios.id,\n"
                 + "tipo_usuarios.descripcion\n"
-                + "FROM tipo_usuarios";
+                + "FROM tipo_usuarios order by id ASC";
 
         try {
             // La ejecuto

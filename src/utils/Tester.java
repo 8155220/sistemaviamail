@@ -52,6 +52,7 @@ public class Tester {
         //sw.processMessage("subject:ELIMINARINDICADOR [31]");    
        //RESULTADOS
        sw.processMessage("subject:OBTENERUSUARIOENCUESTA [1]"); //->Listade usuarios de la encuesta 1
+       
        sw.processMessage("subject:OBTENERRESULTADOUSUARIO [1,584]");//->lista rESPUESTAS encuesta 1 usuario 15
        
        

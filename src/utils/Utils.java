@@ -113,6 +113,60 @@ public class Utils {
         return tableString;
     }
 
+    public static String dibujarTablaHTML(DefaultTableModel tabla) {
+        String html = "<!DOCTYPE html>\n"
+                + "<html lang=\"en\">\n"
+                + "<head>\n"
+                + "    <meta charset=\"UTF-8\">\n"
+                + "    <title>Title</title>\n"
+                + "</head>\n"
+                + "<body>"
+                + "<table class=\"table table-hover\">\n"
+                + "        <tr>";
+        String tableString = "";
+        ArrayList<String> headers = new ArrayList<>();
+        ArrayList<List<String>> rowList = new ArrayList<>();
+
+        // Agregando Los Headers
+        for (int i = 0; i < tabla.getColumnCount(); i++) {
+            headers.add(tabla.getColumnName(i));
+            html += "<th>" + tabla.getColumnName(i) + "</th>";
+        }
+        html += "<tbody>";
+
+        // Agregando Content
+        for (int i = 0; i < tabla.getRowCount(); i++) {
+            ArrayList<String> row = new ArrayList<>();
+            html += "<tr>";
+            for (int j = 0; j < tabla.getColumnCount(); j++) {
+                row.add(String.valueOf(tabla.getValueAt(i, j)));
+                html += "<td class=\"table-text\">";
+                html += String.valueOf(tabla.getValueAt(i, j));
+                html += "</td>";
+            }
+            rowList.add(row.subList(0, row.size()));
+            html += "</tr>";
+        }
+        html += "</tbody>\n"
+                + "    </table>";
+
+        if (rowList.size() < 1) {
+            return "(Tabla Vacia)";
+        }
+
+        // Creando Tabla para mostrar
+        Board board = new Board(300);
+        Table table = new Table(board, 300, headers, rowList);
+        Block tableBlock = table.tableToBlocks();
+        board.setInitialBlock(tableBlock);
+        board.build();
+        tableString = board.getPreview();
+
+        html += "</body>\n"
+                + "</html>";
+        return html;
+    }
+
     public static String quitarComillas(String texto) {
         int len = texto.length() - 1;
         return texto.substring(1, len);
