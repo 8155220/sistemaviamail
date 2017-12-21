@@ -205,6 +205,7 @@ public class Utils {
                 + "    </head>\n"
                 + "<body>\n"
                 + "<form class=\"form-horizontal\" method=\"POST\" action=\"http://www.google.com\">\n"
+                + "<input type=\"hidden\" name=\"_token\" value=\"GGErSaNMewTQnP83vTO4VznZhVeRwh8fqCVm0fby\">"
                 + "\n"
                 + "    <table class=\"table table-hover\">\n"
                 + "        <tr>\n"
